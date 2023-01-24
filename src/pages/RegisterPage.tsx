@@ -1,5 +1,4 @@
-import axios from "axios";
-import { Navigate } from 'react-router-dom';
+import React from 'react';
 import Register from "../components/Register";
 
 
@@ -14,7 +13,7 @@ interface formDataProps {
 const RegisterPage = () => {
 
   return (
-    <Register />
+    <div>Hello World</div>
   )
 
 

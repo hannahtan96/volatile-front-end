@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API_URL = 'http://127.0.0.1:5000/api'
 
-export const login = function(email: string, password: string) {
+export const login = (email: string, password: string) => {
   return axios.post(API_URL + 'signin', {
     email,
     password
@@ -16,7 +16,7 @@ export const login = function(email: string, password: string) {
   })
 };
 
-export const register = function(firstName: string, lastName: string, username: string, email: string, password: string) {
+export const registerNewUser = (firstName: string, lastName: string, username: string, email: string, password: string) => {
   return axios.post(API_URL + 'signup', {
     firstName,
     lastName,

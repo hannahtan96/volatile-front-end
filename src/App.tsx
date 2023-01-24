@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import NavigationBar from './components/NavigationBar';
-import SignUpForm from './components/Register';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import RegisterPage from './pages/Register';
-
+import Layout from './pages/Layout';
+import HomePage from './pages/HomePage';
+import RegisterPage from './pages/RegisterPage';
 
 function App() {
 
@@ -25,10 +24,16 @@ function App() {
     <div className="App">
 
       <div className='contain mt-3'>
-        <Routes>
-          <Route path='/register' element={<RegisterPage />} />
-        </Routes>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<HomePage />} />
+              <Route path="register" element={<RegisterPage />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
       </div>
+
     </div>
   );
 }

@@ -1,0 +1,13 @@
+form {
+  display: inline-block;
+  flex-direction: column;
+  width: 400px;
+  padding: 20px;
+}
+
+.form-field {
+  display: flex;
+  justify-content: space-between;
+  margin: 25px;
+}
+

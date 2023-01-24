@@ -1,24 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './App.css';
+import NavigationBar from './components/NavigationBar';
+import SignUpForm from './components/Register';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import RegisterPage from './pages/Register';
+
 
 function App() {
+
+  // const signUp = (formData: formDataProps) => {
+  //   axios
+  //     .get(`${BACKEND_URL}/signup`, formData)
+  //     .then((response) => {
+  //       console.log(response.data)
+  //     })
+  //     .catch((err) => {
+  //       console.log(err)
+  //     })
+  // }
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      <div className='contain mt-3'>
+        <Routes>
+          <Route path='/register' element={<RegisterPage />} />
+        </Routes>
+      </div>
     </div>
   );
 }

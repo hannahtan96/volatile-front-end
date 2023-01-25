@@ -24,7 +24,7 @@ interface MenuAppBarProps {
 const pages = ['Score', 'Login', 'Register'];
 const settings = ['Profile', 'Account', 'Logout'];
 
-const ResponsiveAppBar = (props: MenuAppBarProps) => {
+const ResponsiveAppBar = () => {
 
   const { user } = useContext(UserContext) as UserContextType;
 
@@ -141,8 +141,6 @@ const ResponsiveAppBar = (props: MenuAppBarProps) => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                {/* {props.user ?
-                <Typography className='curr-user-display' textAlign="center">{props.user.displayName}</Typography> : ""} */}
                 {user ?
                 <Typography className='curr-user-display' textAlign="center">{user.displayName}</Typography> : ""}
               </IconButton>

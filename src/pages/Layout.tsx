@@ -6,10 +6,10 @@ interface LayoutProps {
   user: User | null
 }
 
-const Layout = (props: LayoutProps) => {
+const Layout = () => {
   return (
     <>
-      <MenuAppBar user={props.user} />
+      <MenuAppBar />
       <Outlet />
     </>
   )

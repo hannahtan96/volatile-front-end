@@ -26,7 +26,7 @@ function App() {
       <div className='contain mt-3'>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Layout user={user}/>}>
+            <Route path="/" element={<Layout />}>
               <Route path="home" element={<HomePage />} />
               <Route path="register" element={<RegisterPage />} />
               <Route path="login" element={<LoginPage />} />

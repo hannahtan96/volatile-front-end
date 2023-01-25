@@ -1,14 +1,11 @@
-import { ChangeEvent, FormEventHandler, SyntheticEvent, useState } from 'react';
-import { FieldValues, useForm } from 'react-hook-form';
+import { ChangeEvent, useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup'
-import User from '../types/user.type';
+import { Button, TextField, makeStyles } from '@material-ui/core';
 import { registerNewUser } from '../services/auth.service'
 import './Register.css'
 
-interface RegisterProps {
-  signUpCallback: Function
-}
 
 interface signUpCredentials {
   firstName: string
@@ -18,16 +15,27 @@ interface signUpCredentials {
   password: string
 }
 
-const Register = (props: RegisterProps) => {
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: theme.spacing(2),
+
+    '& .MuiTextField-root': {
+      margin: theme.spacing(1),
+      width: '300px',
+    },
+    '& .MuiButtonBase-root': {
+      margin: theme.spacing(2),
+    },
+  },
+}));
+
+const Register = () => {
   const [successful, setSuccessful] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
-  // const initalValues: User = {
-  //   firstName: '',
-  //   lastName: '',
-  //   username: '',
-  //   email: '',
-  //   password: ''
-  // }
 
   const validationSchema = Yup.object().shape({
     firstName: Yup.string().min(3).max(20).required(),
@@ -37,38 +45,19 @@ const Register = (props: RegisterProps) => {
     password: Yup.string().min(8).max(32).required()
   })
 
+  const classes = useStyles();
 
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    username: '',
-    email: '',
-    password: ''
-  });
-
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<signUpCredentials>({
+  const { handleSubmit, control, reset } = useForm<signUpCredentials>({
     resolver: yupResolver(validationSchema)
   })
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const NewFormData = { ...formData, [e.target.name]: e.target.value };
-    setFormData(NewFormData);
-  };
-
   const handleRegister = ({firstName, lastName, username, email, password}: signUpCredentials) => {
-
-    // e.preventDefault()
-
-    // const firstName = formData.firstName
-    // const lastName = formData.lastName
-    // const username = formData.username
-    // const email = formData.email
-    // const password = formData.password
-
 
     registerNewUser(firstName, lastName, username, email, password)
       .then((response:any) => {
+        console.log(response.data)
         setMessage(response.data.message)
+        reset()
       })
       .catch((error: any) => {
         const resMessage =
@@ -84,42 +73,104 @@ const Register = (props: RegisterProps) => {
     }
 
     return (
-      <form onSubmit={handleSubmit(handleRegister)}>
+      <section>
+        {!successful ?
+        (<div className="form-section">
+          <h2>Register New User</h2>
 
-        <input
-          {...register("firstName")}
-          placeholder="firstName"
-        />
-        <p>{errors.firstName?.message}</p>
+          <form className={classes.root} onSubmit={handleSubmit(handleRegister)}>
 
-        <input
-          {...register("lastName")}
-          placeholder="lastName"
-        />
-        <p>{errors.lastName?.message}</p>
+            <Controller
+              name="firstName"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value }, fieldState: { error } }) => (
+                <TextField
+                  label="First Name"
+                  variant="outlined"
+                  value={value}
+                  onChange={onChange}
+                  error={!!error}
+                  helperText={error ? error.message : null}
+                />
+              )}
+              rules={{ required: 'First name required' }}
+            />
 
-        <input
-          {...register("username")}
-          placeholder="username"
-        />
-        <p>{errors.username?.message}</p>
+            <Controller
+              name="lastName"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value }, fieldState: { error } }) => (
+                <TextField
+                  label="Last Name"
+                  variant="outlined"
+                  value={value}
+                  onChange={onChange}
+                  error={!!error}
+                  helperText={error ? error.message : null}
+                />
+              )}
+              rules={{ required: 'Last name required' }}
+            />
 
-        <input
-          {...register("email")}
-          placeholder="email"
-        />
-        <p>{errors.email?.message}</p>
+            <Controller
+              name="username"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value }, fieldState: { error } }) => (
+                <TextField
+                  label="Username"
+                  variant="outlined"
+                  value={value}
+                  onChange={onChange}
+                  error={!!error}
+                  helperText={error ? error.message : null}
+                />
+              )}
+              rules={{ required: 'Username required' }}
+            />
 
-        <input
-          {...register("password")}
-          placeholder="password"
-        />
-        <p>{errors.password?.message}</p>
+            <Controller
+              name="email"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value }, fieldState: { error } }) => (
+                <TextField
+                  label="Email"
+                  variant="outlined"
+                  value={value}
+                  onChange={onChange}
+                  error={!!error}
+                  helperText={error ? error.message : null}
+                />
+              )}
+              rules={{ required: 'Email required' }}
+            />
 
+            <Controller
+              name="password"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value }, fieldState: { error } }) => (
+                <TextField
+                  label="Password"
+                  variant="outlined"
+                  value={value}
+                  onChange={onChange}
+                  error={!!error}
+                  helperText={error ? error.message : null}
+                />
+              )}
+              rules={{ required: 'Password required' }}
+            />
 
-
-        <input id="button" type="submit" value="Register" />
-      </form>
+            <Button type='submit' variant="contained" color="primary">Register</Button>
+          </form>
+        </div>)
+        :
+        (<div>{message}</div>)}
+      </section>
     );
   };
 

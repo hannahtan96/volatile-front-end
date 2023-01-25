@@ -1,24 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import NavigationBar from './components/NavigationBar';
+import { getCurrentUser } from './services/auth.service';
 import Layout from './pages/Layout';
 import HomePage from './pages/HomePage';
 import RegisterPage from './pages/RegisterPage';
+import LoginPage from './pages/LoginPage';
+import LogoutPage from './pages/LogoutPage';
 
 function App() {
 
-  // const signUp = (formData: formDataProps) => {
-  //   axios
-  //     .get(`${BACKEND_URL}/signup`, formData)
-  //     .then((response) => {
-  //       console.log(response.data)
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     })
-  // }
+  const [user, setUser] = useState<string|null>('')
 
+  useEffect(() => {
+    setUser(getCurrentUser())
+  }, [])
 
   return (
     <div className="App">
@@ -26,9 +22,11 @@ function App() {
       <div className='contain mt-3'>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<HomePage />} />
+            <Route path="/" element={<Layout user={user}/>}>
+              <Route path="home" element={<HomePage />} />
               <Route path="register" element={<RegisterPage />} />
+              <Route path="login" element={<LoginPage />} />
+              <Route path="logout" element={<LogoutPage />} />
             </Route>
           </Routes>
         </BrowserRouter>

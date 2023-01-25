@@ -1,32 +1,39 @@
+import { useState, useEffect } from 'react'
 import { Nav, NavLink, NavMenu } from './NavBarElements'
-import { BrowserRouter, Route, Link } from 'react-router-dom';
-
-type Month = 'Jan' | 'Feb' | 'Mar'
-
+// import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { getCurrentUser, logout } from '../services/auth.service'
+import { ContactSupportOutlined } from '@material-ui/icons';
 
 interface NavigationBarProps {
-  name: string
-  date: string
+  user: string|null
 }
 
-const NavigationBar = () => {
+const NavigationBar = (props: NavigationBarProps) => {
+
+  // const [user, setUser] = useState<string|null>('')
+
+  const logoutNow = () => {
+    logout()
+  }
+
   return (
     <Nav>
       <NavMenu>
-        {/* <NavLink to="/about" activeStyle>
-          About
+        <NavLink to="/home">
+          Home
         </NavLink>
-        <NavLink to="/contact" activeStyle>
-          Contact Us
+        <NavLink to="/login">
+          Login
         </NavLink>
-        <NavLink to="/blogs" activeStyle>
-          Blogs
-        </NavLink> */}
-        <NavLink to="/register" activeStyle>
-          Sign Up
+        <NavLink to="/register">
+          Register
         </NavLink>
-        <Link to="/register">Register</Link>
+        <NavLink to="/logout" onClick={logoutNow}>
+          Logout
+        </NavLink>
       </NavMenu>
+      <div>{props.user}</div>
+      {props.user ? <div>Welcome {props.user}</div> : ""}
     </Nav>
   )
 };

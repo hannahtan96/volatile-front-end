@@ -1,10 +1,14 @@
 import { Outlet } from 'react-router-dom';
 import NavigationBar from '../components/NavigationBar';
 
-const Layout = () => {
+interface LayoutProps {
+  user: string|null
+}
+
+const Layout = (props: LayoutProps) => {
   return (
     <>
-      <NavigationBar />
+      <NavigationBar user={props.user}/>
       <Outlet />
     </>
   )

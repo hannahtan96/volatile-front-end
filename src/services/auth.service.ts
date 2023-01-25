@@ -9,7 +9,6 @@ export const login = (email: string, password: string) => {
   })
   .then((response) => {
     if (response.data.idToken) {
-      console.log(response.data)
       localStorage.setItem('user', JSON.stringify(response.data))
     }
     return response.data
@@ -30,9 +29,8 @@ export const registerNewUser = (firstName: string, lastName: string, username: s
 };
 
 export const getCurrentUser = () => {
-  const userStr = localStorage.getItem('displayName');
+  const userStr = localStorage.getItem('user');
   if (userStr) {
-    console.log(userStr)
     return JSON.parse(userStr);
   } else {
     return null;

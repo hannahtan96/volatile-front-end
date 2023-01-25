@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { getCurrentUser } from './services/auth.service';
@@ -7,10 +7,15 @@ import HomePage from './pages/HomePage';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import LogoutPage from './pages/LogoutPage';
+import User from './types/user.type';
+
+
+export
+
 
 function App() {
 
-  const [user, setUser] = useState<string|null>('')
+  const [user, setUser] = useState<User|null>(null);
 
   useEffect(() => {
     setUser(getCurrentUser())
@@ -18,7 +23,6 @@ function App() {
 
   return (
     <div className="App">
-
       <div className='contain mt-3'>
         <BrowserRouter>
           <Routes>
@@ -31,7 +35,6 @@ function App() {
           </Routes>
         </BrowserRouter>
       </div>
-
     </div>
   );
 }

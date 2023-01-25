@@ -1,19 +1,15 @@
 export default interface User {
-  user_id?: any | null;
-  firstName: string,
-  lastName: string,
-  username: string,
+  kind: string
+  localId: string
   email: string,
-  password: string,
-  roles?: Array<string>;
+  displayName: string
+  idToken: string
+  registered: boolean
+  refreshToken: string
+  expiresIn: string
 }
 
-export default interface loggedInUser {
-  user_id?: any | null;
-  firstName: string,
-  lastName: string,
-  username: string,
-  email: string,
-  password: string,
-  roles?: Array<string>;
+export type UserContextType = {
+  user?: User;
+  saveUser: (user: User) => void;
 }

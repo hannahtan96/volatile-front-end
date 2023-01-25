@@ -7,7 +7,6 @@ const HomePage = () => {
     <section>
       <div>Welcome to Volatile!</div>
     </section>
-
   )
 
 

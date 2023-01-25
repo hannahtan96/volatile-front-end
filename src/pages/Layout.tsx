@@ -1,14 +1,15 @@
 import { Outlet } from 'react-router-dom';
-import NavigationBar from '../components/NavigationBar';
+import MenuAppBar from '../components/MenuAppBar';
+import User from '../types/user.type';
 
 interface LayoutProps {
-  user: string|null
+  user: User | null
 }
 
 const Layout = (props: LayoutProps) => {
   return (
     <>
-      <NavigationBar user={props.user}/>
+      <MenuAppBar user={props.user} />
       <Outlet />
     </>
   )

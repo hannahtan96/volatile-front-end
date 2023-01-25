@@ -1,16 +1,17 @@
-import { ChangeEvent, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Button, TextField, makeStyles } from '@material-ui/core';
+import { useNavigate } from 'react-router-dom';
 import { login } from '../services/auth.service'
-
+import User, { UserContextType } from "../types/user.type";
+import { UserContext } from '../context/userContext';
 
 interface loginCredentials {
   email: string
   password: string
 }
-
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -31,8 +32,19 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Login = () => {
+  const { user, saveUser } = useContext(UserContext) as UserContextType;
+
+  const [currUser, setCurrUser] = useState<User|null>(null)
   const [successful, setSuccessful] = useState<boolean>(false);
-  const [message, setMessage] = useState<string>('');
+  const [successMessage, setSuccessMessage] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
+
+  useEffect(() => {
+    if (user) {
+      setSuccessful(true);
+      setSuccessMessage('You\'re already logged in!')
+    }
+  }, [user])
 
 
   const validationSchema = Yup.object().shape({
@@ -41,6 +53,7 @@ const Login = () => {
   });
 
   const classes = useStyles();
+  const navigate = useNavigate()
 
   const { handleSubmit, control, reset } = useForm<loginCredentials>({
     resolver: yupResolver(validationSchema)
@@ -51,7 +64,12 @@ const Login = () => {
     login(email, password)
       .then((response:any) => {
         console.log(response)
-        setMessage(response)
+        if (response.displayName) {
+          saveUser(response);
+          navigate('/home')
+        } else {
+          setErrorMessage(response.message);
+        }
         reset()
       })
       .catch((error: any) => {
@@ -62,7 +80,8 @@ const Login = () => {
           error.message ||
           error.toString();
 
-        setMessage(resMessage);
+        console.log(resMessage)
+        setErrorMessage(resMessage);
         setSuccessful(false);
       })
     }
@@ -90,6 +109,7 @@ const Login = () => {
                 />
               )}
               rules={{ required: 'Email required' }}
+
             />
 
             <Controller
@@ -109,11 +129,10 @@ const Login = () => {
               rules={{ required: 'Password required' }}
             />
 
+            {errorMessage ? <p>Incorrect email or password</p> : ""}
             <Button type='submit' variant="contained" color="primary">Login</Button>
           </form>
-        </div>)
-        :
-        (<div>{message}</div>)}
+        </div>) : <div>{successMessage}</div>}
       </section>
     );
   };

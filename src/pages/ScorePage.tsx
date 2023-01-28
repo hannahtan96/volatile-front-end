@@ -1,16 +1,18 @@
 import React from 'react';
 import { useContext } from 'react';
-import Login from '../components/Login';
 import { UserContextType } from "../types/user.type";
 import { UserContext } from '../context/userContext';
+import Score from '../components/Score';
 
-const LoginPage = () => {
+
+const ScorePage = () => {
 
   const { user } = useContext(UserContext) as UserContextType;
 
   return (
-    (user?.displayName ? <div>You're already logged in!</div> : <Login />)
+    (user?.displayName ? <Score /> : <div>You need to be logged in!</div>)
   )
 
+
 }
-export default LoginPage;
+export default ScorePage;

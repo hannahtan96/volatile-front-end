@@ -1,12 +1,13 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Button, TextField, makeStyles } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../services/auth.service'
-import User, { UserContextType } from "../types/user.type";
+import { UserContextType } from "../types/user.type";
 import { UserContext } from '../context/userContext';
+import './Login.css';
 
 interface loginCredentials {
   email: string
@@ -32,20 +33,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Login = () => {
-  const { user, saveUser } = useContext(UserContext) as UserContextType;
+  const { saveUser } = useContext(UserContext) as UserContextType;
 
-  const [currUser, setCurrUser] = useState<User|null>(null)
-  const [successful, setSuccessful] = useState<boolean>(false);
-  const [successMessage, setSuccessMessage] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
-
-  useEffect(() => {
-    if (user) {
-      setSuccessful(true);
-      setSuccessMessage('You\'re already logged in!')
-    }
-  }, [user])
-
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().required("This field is required!"),
@@ -66,7 +56,7 @@ const Login = () => {
         console.log(response)
         if (response.displayName) {
           saveUser(response);
-          navigate('/home')
+          navigate('/score')
         } else {
           setErrorMessage(response.message);
         }
@@ -80,16 +70,13 @@ const Login = () => {
           error.message ||
           error.toString();
 
-        console.log(resMessage)
         setErrorMessage(resMessage);
-        setSuccessful(false);
       })
     }
 
     return (
       <section>
-        {!successful ?
-        (<div className="form-section">
+        <div className="form-section">
           <h2>Login</h2>
 
           <form className={classes.root} onSubmit={handleSubmit(handleLogin)}>
@@ -122,6 +109,7 @@ const Login = () => {
                   variant="outlined"
                   value={value}
                   onChange={onChange}
+                  type='password'
                   error={!!error}
                   helperText={error ? error.message : null}
                 />
@@ -129,10 +117,10 @@ const Login = () => {
               rules={{ required: 'Password required' }}
             />
 
-            {errorMessage ? <p>Incorrect email or password</p> : ""}
+            {errorMessage ? <p id='login-error-message'>Incorrect email or password</p> : <div></div>}
             <Button type='submit' variant="contained" color="primary">Login</Button>
           </form>
-        </div>) : <div>{successMessage}</div>}
+        </div>
       </section>
     );
   };

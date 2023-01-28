@@ -1,0 +1,11 @@
+#doughnut-chart {
+  padding: 30px;
+  display: flex;
+  /* justify-content: center; */
+  align-items: left;
+  /* height: 90vh; */
+}
+
+.blue-arc-paths {
+  color: blue
+}

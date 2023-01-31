@@ -19,7 +19,7 @@ interface MenuAppBarProps {
   user: User | null
 }
 
-const pages = ['Score', 'Login', 'Register'];
+const pages = ['Portfolio', 'Score', 'Login', 'Register'];
 const settings = ['Profile', 'Account', 'Logout'];
 
 const ResponsiveAppBar = () => {

@@ -1,0 +1,6 @@
+.common-word {
+  background-color: lightgray;
+  width: max-content;
+  padding: 3px;
+  border-radius: 5px;
+}

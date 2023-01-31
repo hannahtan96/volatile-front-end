@@ -8,6 +8,7 @@ import ScorePage from './pages/ScorePage'
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import LogoutPage from './pages/LogoutPage';
+import PortfolioPage from './pages/PortfolioPage';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route path="home" element={<HomePage />} />
+              <Route path="portfolio" element={<PortfolioPage />} />
               <Route path="score" element={<ScorePage />} />
               <Route path="register" element={<RegisterPage />} />
               <Route path="login" element={<LoginPage />} />

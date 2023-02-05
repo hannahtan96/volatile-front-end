@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useContext } from 'react';
+import { UserContextType } from "../types/user.type";
+import { UserContext } from '../context/userContext';
 import { AgChartsReact } from 'ag-charts-react';
 import './Score2.css'
 import CommonWordsList from './CommonWordsList';
 import SentimentedWordList from './SentimentedWordList';
+import { Weighting } from '../types/user.type';
 
 
 const netflix = {
@@ -283,12 +287,6 @@ export interface onePosition {
   sentiment: number
 }
 
-interface weighting {
-  name: string
-  ticker: string,
-  weight: number
-}
-
 class CommonWord {
   word: string;
   frequency: number;
@@ -301,13 +299,13 @@ class CommonWord {
 
 const Score = () => {
 
+  const { user, userPortfolioWeightings, saveUserPortfolioWeightings } = useContext(UserContext) as UserContextType;
+
   const [positions, setPositions] = useState<positionData[]>([netflix, microsoft])
-  const [weightings, setWeightings] = useState<weighting[]>([
-    {name: "Netflix", ticker: "NFTX", weight: 50},
-    {name: "Microsoft", ticker: "MSFT", weight: 50}
-  ])
+  const [weightings, setWeightings] = useState<Weighting[]>([])
   const [sentiment, setSentiment] = useState<number|null>()
-  const [userData, setUserData] = useState<any[]>([])
+  const [userData, setUserData] = useState<onePosition[]>([])
+
   const [clicked, setClicked] = useState<boolean>(false)
   const [selectedPosition, setSelectedPosition] = useState<positionData|null>()
   const [commonWords, setCommonWords] = useState<Word>()
@@ -315,14 +313,27 @@ const Score = () => {
 
 
   useEffect(() => {
-    setData()
-  }, [])
+    // console.log(weightings)
+    if ((userPortfolioWeightings?.weightings.length || 0) > 0) {
+      const w = userPortfolioWeightings?.weightings!
+      setWeightings(w)
+
+    }
+  }, [userPortfolioWeightings])
+
+  useEffect(() => {
+    if (weightings.length > 0) {
+      mapShareWeights()
+    }
+
+  }, [weightings])
 
   useEffect(() => {
 
-    if (userData.length > 0) {
+    if (weightings.length > 0 && userData.length > 0) {
       calculateSentiment()
     }
+
   }, [userData])
 
   useEffect(() => {
@@ -330,6 +341,7 @@ const Score = () => {
     setCommonWords(selectedPosition?.words)
     setSentimentedWords(selectedPosition?.sentiments || [])
   }, [selectedPosition])
+
 
   let percentage_option = {
     style: 'percent',
@@ -341,12 +353,17 @@ const Score = () => {
   const numFormatter = new Intl.NumberFormat("en-US");
   const colors = ["#75eab6", "#56a06c", "#ade64f", "#3d99ce", "#a7dcf9", "#aea2eb", "#fd95e8", "#f642d0", "#2af464", "#8f937f", "#dcd888", "#d6790b", "#fd5917", "#ffb4a2", "#fe707d", "#f4d403"]
 
-  const setData = () => {
+
+  const mapShareWeights = () => {
+    // let w = userPortfolioWeightings?.weightings!
+    console.log(weightings)
     const uD = positions.map(p => ({
       position: p["ticker"],
-      share: weightings.find(p => p["ticker"])?.weight,
-      sentiment: p["sentiment_score"],
+      share: weightings!
+        .filter(w => w["01. symbol"] === p["ticker"])[0]["12. proportion"],
+      sentiment: p["sentiment_score"]
     }))
+    console.log(uD)
     setUserData(uD)
   }
 
@@ -357,7 +374,8 @@ const Score = () => {
       weighted_total += userData[i].share * userData[i].sentiment;
       total_weight += userData[i].share
     }
-    setSentiment(100 * (weighted_total / total_weight));
+    console.log(weighted_total / total_weight)
+    setSentiment(Math.round(1000 * (weighted_total / total_weight))/10);
   }
 
   const options = {
@@ -381,7 +399,7 @@ const Score = () => {
         strokeWidth: 3,
         showInLegend: false,
         innerLabels: [
-          { text: `${sentiment}%`, fontSize: 40, color: 'black' },
+          { text: `${percFormatter.format((sentiment || 0)/100)}`, fontSize: 40, color: 'black' },
           { text: 'Sentiment', margin: 4 }
         ],
         innerCircle: {
@@ -400,7 +418,7 @@ const Score = () => {
           fontWeight: "normal",
           formatter: ({ datum, sectorLabelKey }: any) => {
             const value = datum[sectorLabelKey];
-            return percFormatter.format(value/100);
+            return percFormatter.format(value);
           }
         },
         tooltip: {
@@ -434,19 +452,20 @@ const Score = () => {
     <section id='score-page'>
       <div id='score-flex-container'>
 
-        <div id='score-section'>
-          <AgChartsReact id="ag" options={options} />
+      { (sentiment! > 0) ?
+          (<div id='score-section'>
+            <AgChartsReact id="ag" options={options} />
+          </div>)
+          : <div></div> }
+
+          <div id='sentimented-words-section' className='p-20'>
+            {clicked ? <SentimentedWordList words={sentimentedWords} /> : <div></div>}
+          </div>
+          <div id='common-words-section' className='p-20'>
+            {clicked ? <CommonWordsList {...commonWords} /> : <div></div>}
+          </div>
         </div>
 
-        <div id='sentimented-words-section' className='p-20'>
-          {clicked ? <SentimentedWordList words={sentimentedWords} /> : <div></div>}
-        </div>
-        <div id='common-words-section' className='p-20'>
-          {clicked ? <CommonWordsList {...commonWords} /> : <div></div>}
-        </div>
-
-
-      </div>
     </section>
 
   );

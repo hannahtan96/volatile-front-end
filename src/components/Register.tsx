@@ -54,12 +54,12 @@ const Register = () => {
   const handleRegister = ({firstName, lastName, username, email, password}: signUpCredentials) => {
 
     registerNewUser(firstName, lastName, username, email, password)
-      .then((response:any) => {
+      .then((response) => {
         console.log(response.data)
         setMessage(response.data.message)
         reset()
       })
-      .catch((error: any) => {
+      .catch((error) => {
         const resMessage =
           (error.response &&
             error.response.data &&

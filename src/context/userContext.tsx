@@ -1,16 +1,32 @@
 import { createContext, useEffect, useState } from "react";
-import User, { UserContextType } from "../types/user.type";
+import axios from "axios";
+// import User, UserPortfolio, { UserContextType } from "../types/user.type";
+import { User, UserPortfolio, UserContextType, Weightings } from "../types/user.type";
 
 export const UserContext = createContext<UserContextType | null>(null);
 
 const UserProvider = ({ children }: any) => {
   const [user, setUser] = useState<User>();
+  const [userPortfolio, setUserPortfolio] = useState<UserPortfolio>()
+  const [userPortfolioWeightings, setUserPortfolioWeightings] = useState<Weightings>()
+  // const [totalWeight, setTotalWeight] = useState<number>()
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('user') || '{}')
     if (userData.displayName) {
-      saveUser(userData)
+      setUser(userData)
     }
+
+    const userPortfolioData = JSON.parse(localStorage.getItem('userPortfolio') || '{}')
+    if (userPortfolioData?.user) {
+      setUserPortfolio(userPortfolioData)
+    }
+
+    // const userPortfolioWeightingsData = JSON.parse(localStorage.getItem('userPortfolioWeightings') || '{}')
+    // if (userPortfolioWeightingsData.length > 0) {
+    //   setUserPortfolioWeightings(userPortfolioWeightingsData)
+    // }
+
   }, [])
 
   const saveUser = (user: User) => {
@@ -19,8 +35,22 @@ const UserProvider = ({ children }: any) => {
     }
   }
 
+  const saveUserPortfolio = (userPortfolio: UserPortfolio) => {
+    if (userPortfolio.user) {
+      setUserPortfolio(userPortfolio)
+    }
+  }
+
+  const saveUserPortfolioWeightings = (userPortfolioWeightings: Weightings) => {
+    // console.log(userPortfolioWeightings)
+    let length = userPortfolioWeightings.weightings.length
+    if (length > 0) {
+      setUserPortfolioWeightings(userPortfolioWeightings)
+    }
+  }
+
   return (
-    <UserContext.Provider value={{ user, saveUser }}>
+    <UserContext.Provider value={{ user, userPortfolio, userPortfolioWeightings, saveUser, saveUserPortfolio, saveUserPortfolioWeightings }}>
       { children }
     </UserContext.Provider>
   )

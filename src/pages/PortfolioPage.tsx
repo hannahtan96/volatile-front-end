@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AgChartsReact } from 'ag-charts-react';
 import { useContext } from 'react';
-import { UserContextType } from "../types/user.type";
+import { UserContextType, Weighting } from "../types/user.type";
 import { UserContext } from '../context/userContext';
 import Portfolio from '../components/Portfolio';
 import { getCurrUserPortfolio } from '../services/user.service';
@@ -14,16 +14,16 @@ interface Weights {
 
 const PortfolioPage = () => {
 
-  const { user, userPortfolio } = useContext(UserContext) as UserContextType;
+  const { user, userPortfolioWeightings } = useContext(UserContext) as UserContextType;
 
-  const [weights, setWeightings] = useState<number>()
+  const [weightings, setWeightings] = useState<Weighting[]>([])
+  const [display, setDisplay] = useState<boolean>(false)
 
   useEffect(() => {
-
-    if ((userPortfolio?.portfolio.length || 0) > 0) {
-      calculateWeightings()
+    if ((userPortfolioWeightings?.weightings.length || 0) > 0) {
+      setDisplay(true)
     }
-  }, [userPortfolio])
+  }, [userPortfolioWeightings])
 
 
   let percentage_option = {
@@ -34,29 +34,18 @@ const PortfolioPage = () => {
 
   const percFormatter = new Intl.NumberFormat("en-US", percentage_option)
   const numFormatter = new Intl.NumberFormat("en-US");
+  const dollarFormatter = new Intl.NumberFormat("en-US", { style: 'currency', currency: 'USD' })
   const colors = ["#75eab6", "#56a06c", "#ade64f", "#3d99ce", "#a7dcf9", "#aea2eb", "#fd95e8", "#f642d0", "#2af464", "#8f937f", "#dcd888", "#d6790b", "#fd5917", "#ffb4a2", "#fe707d", "#f4d403"]
 
-  const calculateWeightings = () => {
-    let weighted_total = 0;
-    let total_weight = 0;
-    let port = userPortfolio!.portfolio
-    for (let i = 0; i < port.length; i += 1) {
-      weighted_total += port[i].shares
-      //  * port[i].sentiment;
-      total_weight += port[i].shares
-    }
-    setWeightings(100 * (weighted_total / total_weight));
-  }
-
-  console.log(userPortfolio?.portfolio)
   const options = {
-    data: userPortfolio?.portfolio,
+    data: userPortfolioWeightings?.weightings,
     series: [
       {
         type: "pie",
-        labelKey: "ticker",
-        angleKey: "shares",
-        sectorLabelKey: "ticker",
+        labelKey: "01. symbol",
+        angleKey: "12. proportion",
+        radiusKey: "05. price",
+        sectorLabelKey: "13. name",
         innerRadiusOffset: -25,
         innerRadiusRatio: 0.60,
         fills: colors,
@@ -75,9 +64,19 @@ const PortfolioPage = () => {
           color: "white",
           // fontSize: 14,
           fontWeight: "normal",
-          formatter: ({ datum, sectorLabelKey }: any) => {
-            const value = datum[sectorLabelKey];
-            return percFormatter.format(value/100);
+          formatter: ({ datum, angleKey }: any) => {
+            const value = datum[angleKey];
+            return percFormatter.format(value);
+          }
+        },
+        tooltip: {
+          renderer: ({ datum, sectorLabelKey, title, radiusKey }: any) => {
+            return {
+              title: `${datum[sectorLabelKey]}`,
+              content: `Price: ${dollarFormatter.format(
+                datum[radiusKey]
+              )}`
+            };
           }
         },
         shadow: {
@@ -96,7 +95,12 @@ const PortfolioPage = () => {
       (
         <section>
           <h2>YOUR PORTFOLIO</h2>
-          {userPortfolio?.user ? <AgChartsReact options={options} /> : ""}
+          {display ?
+            (<div>
+              <AgChartsReact options={options} />
+            </div>)
+          :  <div></div>}
+
           <Portfolio />
         </section>
       ) : <div>You need to be logged in!</div>)

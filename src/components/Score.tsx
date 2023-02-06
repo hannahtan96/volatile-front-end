@@ -282,7 +282,8 @@ export interface Word {
 }
 
 export interface onePosition {
-  position: string,
+  ticker: string,
+  name: string,
   share: number,
   sentiment: number
 }
@@ -315,7 +316,7 @@ const Score = () => {
   useEffect(() => {
     // console.log(weightings)
     if ((userPortfolioWeightings?.weightings.length || 0) > 0) {
-      const w = userPortfolioWeightings?.weightings!
+      const w = userPortfolioWeightings!.weightings!
       setWeightings(w)
 
     }
@@ -350,15 +351,15 @@ const Score = () => {
   }
 
   const percFormatter = new Intl.NumberFormat("en-US", percentage_option)
-  const numFormatter = new Intl.NumberFormat("en-US");
+  const numFormatter = new Intl.NumberFormat("en-US", { minimumSignificantDigits: 2, maximumSignificantDigits: 2 });
   const colors = ["#75eab6", "#56a06c", "#ade64f", "#3d99ce", "#a7dcf9", "#aea2eb", "#fd95e8", "#f642d0", "#2af464", "#8f937f", "#dcd888", "#d6790b", "#fd5917", "#ffb4a2", "#fe707d", "#f4d403"]
 
 
   const mapShareWeights = () => {
-    // let w = userPortfolioWeightings?.weightings!
-    console.log(weightings)
     const uD = positions.map(p => ({
-      position: p["ticker"],
+      ticker: p["ticker"],
+      name: weightings!
+        .filter(w => w["01. symbol"] === p["ticker"])[0]["13. name"],
       share: weightings!
         .filter(w => w["01. symbol"] === p["ticker"])[0]["12. proportion"],
       sentiment: p["sentiment_score"]
@@ -387,10 +388,10 @@ const Score = () => {
           text: 'Your Volatile Score',
           fontSize: 44
         },
-        labelKey: "position",
+        labelKey: "ticker",
         angleKey: "share",
         radiusKey: "sentiment",
-        sectorLabelKey: "share",
+        sectorLabelKey: "name",
         innerRadiusOffset: -25,
         innerRadiusRatio: 0.60,
         fills: colors,
@@ -416,16 +417,16 @@ const Score = () => {
           color: "white",
           // fontSize: 14,
           fontWeight: "normal",
-          formatter: ({ datum, sectorLabelKey }: any) => {
-            const value = datum[sectorLabelKey];
+          formatter: ({ datum, angleKey }: any) => {
+            const value = datum[angleKey];
             return percFormatter.format(value);
           }
         },
         tooltip: {
-          renderer: ({ datum, calloutLabelKey, title, radiusKey }: any) => {
+          renderer: ({ datum, sectorLabelKey, title, radiusKey }: any) => {
             return {
-              title,
-              content: `${datum[calloutLabelKey]}: ${numFormatter.format(
+              title: `${datum[sectorLabelKey]}`,
+              content: `Sentiment: ${numFormatter.format(
                 datum[radiusKey]
               )}`
             };
@@ -456,7 +457,7 @@ const Score = () => {
           (<div id='score-section'>
             <AgChartsReact id="ag" options={options} />
           </div>)
-          : <div></div> }
+          : <div>No portfolio registered.</div> }
 
           <div id='sentimented-words-section' className='p-20'>
             {clicked ? <SentimentedWordList words={sentimentedWords} /> : <div></div>}

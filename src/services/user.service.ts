@@ -1,6 +1,7 @@
 import axios from "axios";
 import authHeader from "./auth-header";
 import { Holdings } from '../components/Portfolio';
+import { Weighting } from "../types/user.type";
 
 export const API_URL = 'http://127.0.0.1:5000/api'
 
@@ -12,7 +13,8 @@ export const logPortfolio = ( user: string, email: string, localId: string, port
     portfolio
   }, { headers: authHeader() })
   .then((response) => {
-    if (response.status === 200) {
+    console.log(response)
+    if ((response.data.portfolio.length || 0) > 0) {
       localStorage.setItem('userPortfolio', JSON.stringify(response.data))
     }
     return response.data
@@ -28,6 +30,7 @@ export const getCurrUserPortfolio = (localId: string) => {
     .then((response) => {
       // console.log(response)
       if (response.data) {
+        console.log(response)
         localStorage.setItem('userPortfolio', JSON.stringify(response.data))
       }
       return response.data
@@ -42,6 +45,7 @@ export const getCurrUserPortfolioWeightings = (localId: string) => {
   return axios.get(API_URL + '/portfolio/' + localId + '/tickers', { headers: authHeader() })
     .then((response) => {
       if (response.data) {
+        // let w = JSON.stringify(response.data)
         localStorage.setItem('userPortfolioWeightings', JSON.stringify(response.data))
       }
       return response.data

@@ -12,13 +12,12 @@ import { makeStyles } from "@material-ui/core";
 import { UserContextType } from "../types/user.type";
 import { UserContext } from '../context/userContext';
 import './Portfolio.css'
+import { useNavigate } from 'react-router-dom';
 
-interface FormInputs {
-  holdings: Holdings[]
-}
 
 export interface Holdings {
-  ticker: string
+  symbol: string
+  name: string
   shares: number
 }
 
@@ -49,51 +48,63 @@ const useStyles = makeStyles(theme => ({
 
 const Portfolio = () => {
 
-  const { user, userPortfolio, userPortfolioWeightings } = useContext(UserContext) as UserContextType;
-  const [portfolio, setPortfolio] = useState<any[]>([])
+  const { user, userPortfolio, userPortfolioWeightings, saveUserPortfolioWeightings } = useContext(UserContext) as UserContextType;
+  // const [potentialHoldings, setPotentialHoldings] = useState<AAOutput[]>([])
+  const [badTickerError, setBadTickerError] = useState<string>('')
 
-  useEffect(() => {
-    // console.log(user)
-    // addNewHolding()
-  }, [user])
+    // useEffect(() => {
+    //   if (userPortfolio?.email) {
+    //     saveUserPortfolioWeightings()
+    //   }
+    //   // addNewHolding()
+    // }, [userPortfolio])
 
-  const classes = useStyles();
+    const classes = useStyles();
+    const navigate = useNavigate()
 
-  const { control, handleSubmit, reset } = useForm({
-    reValidateMode: "onBlur"
-  });
 
-  const {
-    fields: holdings,
-    append: appendHoldingRow,
-    remove: removeHolding
-  } = useFieldArray({
-    control,
-    name: "holdings"
-  });
+    const { control, handleSubmit, reset } = useForm({
+      reValidateMode: "onBlur"
+    });
 
-  const handleOnSubmit = (e: any) => {
-    let name = user!.displayName
-    let email = user!.email
-    let localId = user!.localId
-    let portfolio = e.holdings
+    const {
+      fields: holdings,
+      append: appendHoldingRow,
+      remove: removeHolding
+    } = useFieldArray({
+      control,
+      name: "holdings"
+    });
 
-    logPortfolio(name, email, localId, portfolio)
-      .then((response) => {
-        console.log(response.data)
-        reset()
-      })
-      .catch((error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
+    const handleOnSubmit = (e: any) => {
+      let name = user!.displayName
+      let email = user!.email
+      let localId = user!.localId
+      let portfolio = e.holdings
 
-        console.log(resMessage)
-      })
-    };
+      logPortfolio(name, email, localId, portfolio)
+        .then((response) => {
+          console.log(response)
+          if (response["non-existent tickers"]) {
+            setBadTickerError(response["non-existent tickers"])
+          } else {
+            console.log(response.data)
+            reset()
+            navigate('/score')
+          }
+
+        })
+        .catch((error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+          console.log(resMessage)
+        })
+      };
 
     const addNewHolding = () => appendHoldingRow({ ticker: "", shares: '' });
 
@@ -105,70 +116,75 @@ const Portfolio = () => {
           <Box alignItems="center">
             {holdings.map((field, index) => (
               <Grid container wrap='nowrap' key={field.id} spacing={2} >
-                <Grid item xs={28}>
-                  <Controller
-                    control={control}
-                    // must use . for the object key!!!
-                    name={`holdings.${index}.ticker`}
-                    defaultValue=""
-                    render={({ field, fieldState: { error } }) => (
-                      <TextField
-                        {...field}
-                        label="Ticker"
-                        variant="outlined"
-                        type="text"
-                        error={!!error}
-                        helperText={error ? error.message : null}
-                        inputProps={{ style: { textTransform: "uppercase" } }}
-                        fullWidth />
-                    )}
-                    rules={{ required: 'Ticker Required' }}
-                  />
-                </Grid>
 
-                <Grid item xs={24}>
-                  <Controller
-                    control={control}
-                    // must use . for the object key!!!
-                    name={`holdings.${index}.shares`}
-                    defaultValue=""
-                    render={({ field, fieldState: { error } }) => (
-                      <TextField
-                        {...field}
-                        label="# of Shares"
-                        variant="outlined"
-                        type="number"
-                        error={!!error}
-                        helperText={error ? error.message : null}
-                        InputProps={{ inputProps: { min: 1 } }}
-                        fullWidth />
-                    )}
-                    rules={{ required: 'Number of shares Required' }}
-                  />
-                </Grid>
-
-                <Grid item xs={6}>
-                  <Button
-                    color="error"
-                    variant="text"
-                    onClick={() => removeHolding(index)}
-                  >
-                    Delete
-                  </Button>
-                </Grid>
-
+                  <Grid item xs={28}>
+                    <Controller
+                      control={control}
+                      // must use . for the object key!!!
+                      name={`holdings.${index}.ticker`}
+                      defaultValue=""
+                      render={({ field, fieldState: { error } }) => (
+                        <TextField
+                          {...field}
+                          label="Ticker"
+                          variant="outlined"
+                          type="text"
+                          error={!!error}
+                          helperText={error ? error.message : null}
+                          inputProps={{ style: { textTransform: "uppercase" } }}
+                          fullWidth />
+                      )}
+                      rules={{ required: 'Ticker Required' }}
+                    />
                   </Grid>
-                ))}
+
+                  <Grid item xs={24}>
+                    <Controller
+                      control={control}
+                      // must use . for the object key!!!
+                      name={`holdings.${index}.shares`}
+                      defaultValue=""
+                      render={({ field, fieldState: { error } }) => (
+                        <TextField
+                          {...field}
+                          label="# of Shares"
+                          variant="outlined"
+                          type="number"
+                          error={!!error}
+                          helperText={error ? error.message : null}
+                          InputProps={{ inputProps: { min: 1 } }}
+                          fullWidth />
+                      )}
+                      rules={{ required: 'Number of shares Required' }}
+                    />
+                  </Grid>
+
+                  <Grid item xs={6}>
+                    <Button
+                      color="error"
+                      variant="text"
+                      onClick={() => removeHolding(index)}
+                    >
+                      Delete
+                    </Button>
+                  </Grid>
+
+              </Grid>
+
+            ))}
 
               <Grid item xs={12}>
-                {/* {errorMessage ? <p id='login-error-message'>Incorrect email or password</p> : <div></div>} */}
+                {/* <Grid>{potentialHoldings?.length > 0 ? <div>Pick Me</div> : ""}</Grid> */}
+                {badTickerError ? <p id='ticker-errors'>The following tickers are invalid: {badTickerError}</p> : <div></div>}
                 <Button variant="contained" onClick={addNewHolding}>
-                  Add
+                  New
                 </Button>
                 <Button type="submit">Submit</Button>
               </Grid>
             </Box>
         </form>
+
+
       </section>
     );
   }

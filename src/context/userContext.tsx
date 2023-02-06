@@ -18,16 +18,16 @@ const UserProvider = ({ children }: any) => {
     }
 
     const userPortfolioData = JSON.parse(localStorage.getItem('userPortfolio') || '{}')
-    if (userPortfolioData?.user) {
+    if (userPortfolioData.user) {
       setUserPortfolio(userPortfolioData)
     }
 
-    // const userPortfolioWeightingsData = JSON.parse(localStorage.getItem('userPortfolioWeightings') || '{}')
-    // if (userPortfolioWeightingsData.length > 0) {
-    //   setUserPortfolioWeightings(userPortfolioWeightingsData)
-    // }
+    const userPortfolioWeightingsData = JSON.parse(localStorage.getItem('userPortfolioWeightings') || '{}')
+    if (userPortfolioWeightingsData.weightings.length > 0) {
+      setUserPortfolioWeightings(userPortfolioWeightingsData)
+    }
 
-  }, [])
+  }, [children])
 
   const saveUser = (user: User) => {
     if (user.displayName) {
@@ -43,8 +43,7 @@ const UserProvider = ({ children }: any) => {
 
   const saveUserPortfolioWeightings = (userPortfolioWeightings: Weightings) => {
     // console.log(userPortfolioWeightings)
-    let length = userPortfolioWeightings.weightings.length
-    if (length > 0) {
+    if (userPortfolioWeightings.weightings.length > 0) {
       setUserPortfolioWeightings(userPortfolioWeightings)
     }
   }

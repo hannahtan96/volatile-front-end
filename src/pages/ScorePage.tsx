@@ -10,7 +10,6 @@ import { Weighting } from '../types/user.type';
 const ScorePage = () => {
 
   const { user, saveUserPortfolio, saveUserPortfolioWeightings } = useContext(UserContext) as UserContextType;
-  const [w, setW] = useState<Weighting[]>([])
 
   useEffect(() => {
 
@@ -21,11 +20,6 @@ const ScorePage = () => {
 
   }, [user])
 
-  useEffect(() => {
-    if (w.length > 0) {
-      calculateWeightings()
-    }
-  }, [w])
 
   const getUserPortfolio = () => {
     getCurrUserPortfolio(user!.localId)
@@ -47,8 +41,8 @@ const ScorePage = () => {
   const getUserPortfolioWeightings = () => {
     getCurrUserPortfolioWeightings(user!.localId)
       .then((response) => {
-        setW(response.weightings)
-
+        console.log(response)
+        saveUserPortfolioWeightings(response)
       })
       .catch((error) => {
         // const resMessage =
@@ -60,18 +54,6 @@ const ScorePage = () => {
 
         console.log(error)
       })
-  }
-
-  const calculateWeightings = () => {
-    // console.log(userPortfolioWeightings)
-    // let w = userPortfolioWeightings?.weightings!
-    let total_w = w.reduce((sum, a) => sum + (parseInt(a['02. open'])*a['11. my shares']), 0)
-    let newWeightings = w
-      .map((data, i) => ({...data, "12. proportion": (parseInt(w[i]['02. open'])*w[i]['11. my shares'])/total_w}))
-
-    console.log(newWeightings)
-    // localStorage.removeItem('userPortfolioWeightings');
-    saveUserPortfolioWeightings({weightings: newWeightings})
   }
 
   return (

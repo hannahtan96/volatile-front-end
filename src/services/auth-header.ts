@@ -11,8 +11,8 @@ export default function authHeader() {
     // return { Authorization: 'Bearer ' + user.idToken };
 
 
-    return { 'Authorization': user.idToken, "Access-Control-Allow-Origin": "*", 'Content-Type': 'application/json' }
+    return { 'Authorization': user.idToken, 'Access-Control-Allow-Origin': '*' }
   } else {
-    return { 'Authorization': '', "Access-Control-Allow-Origin": "*", 'Content-Type': 'application/json' }
+    return { 'Authorization': '', 'Access-Control-Allow-Origin': '*' }
   }
 }

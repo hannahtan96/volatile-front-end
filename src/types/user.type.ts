@@ -38,8 +38,9 @@ export interface Weighting {
   "08. previous close": string
   "09. change": string
   "10. change percent": string
-  "11. my shares": number
+  "11. shares": number
   "12. proportion": number
+  "13. name": string
 }
 
 export type UserContextType = {

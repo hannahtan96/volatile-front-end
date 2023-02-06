@@ -21,13 +21,6 @@ export interface Holdings {
   shares: number
 }
 
-const myHelper = {
-  email: {
-    required: "Email is Required",
-    pattern: "Invalid Email Address"
-  }
-};
-
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
@@ -48,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 
 const Portfolio = () => {
 
-  const { user, userPortfolio, userPortfolioWeightings, saveUserPortfolioWeightings } = useContext(UserContext) as UserContextType;
+  const { user, saveUserPortfolioWeightings } = useContext(UserContext) as UserContextType;
   // const [potentialHoldings, setPotentialHoldings] = useState<AAOutput[]>([])
   const [badTickerError, setBadTickerError] = useState<string>('')
 
@@ -109,7 +102,7 @@ const Portfolio = () => {
     const addNewHolding = () => appendHoldingRow({ ticker: "", shares: '' });
 
     return (
-      <section id='portfolio-section'>
+      <section id='new-portfolio-form-section'>
 
         <form className={classes.root} onSubmit={handleSubmit(handleOnSubmit)}>
 
@@ -173,15 +166,15 @@ const Portfolio = () => {
 
             ))}
 
-              <Grid item xs={12}>
-                {/* <Grid>{potentialHoldings?.length > 0 ? <div>Pick Me</div> : ""}</Grid> */}
-                {badTickerError ? <p id='ticker-errors'>The following tickers are invalid: {badTickerError}</p> : <div></div>}
-                <Button variant="contained" onClick={addNewHolding}>
-                  New
-                </Button>
-                <Button type="submit">Submit</Button>
-              </Grid>
-            </Box>
+            <Grid item xs={12}>
+              {/* <Grid>{potentialHoldings?.length > 0 ? <div>Pick Me</div> : ""}</Grid> */}
+              {badTickerError ? <p id='ticker-errors'>The following tickers are invalid: {badTickerError}</p> : <div></div>}
+              <Button variant="contained" onClick={addNewHolding}>
+                NEW
+              </Button>
+              <Button type="submit">Submit</Button>
+            </Grid>
+          </Box>
         </form>
 
 

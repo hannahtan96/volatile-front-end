@@ -33,6 +33,28 @@
   padding: 20px;
 }
 
+.b-border {
+  border: 1px solid black;
+}
+
+#portfolio-section {
+  display: flex;
+  height: 60vh;
+  justify-content: center;
+}
+
+#new-portfolio-form {
+  margin: 30px 150px;
+  border-radius: 20px;
+}
+
+#edit-portfolio-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

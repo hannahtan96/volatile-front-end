@@ -7,7 +7,7 @@
 }
 
 #score-flex-container {
-  display: gride;
+  /* display: grid; */
   padding: 20px;
   /* align-items: stretch; */
   /* height: 100%; */

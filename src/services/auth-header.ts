@@ -7,10 +7,6 @@ export default function authHeader() {
   }
 
   if (user && user.idToken) {
-    console.log(user)
-    // return { Authorization: 'Bearer ' + user.idToken };
-
-
     return { 'Authorization': user.idToken, 'Access-Control-Allow-Origin': '*' }
   } else {
     return { 'Authorization': '', 'Access-Control-Allow-Origin': '*' }

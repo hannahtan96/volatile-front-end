@@ -13,17 +13,17 @@ const UserProvider = ({ children }: any) => {
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('user') || '{}')
-    if (userData.displayName) {
+    if (userData?.displayName) {
       setUser(userData)
     }
 
     const userPortfolioData = JSON.parse(localStorage.getItem('userPortfolio') || '{}')
-    if (userPortfolioData.user) {
+    if (userPortfolioData?.user) {
       setUserPortfolio(userPortfolioData)
     }
 
     const userPortfolioWeightingsData = JSON.parse(localStorage.getItem('userPortfolioWeightings') || '{}')
-    if (userPortfolioWeightingsData.weightings.length > 0) {
+    if (userPortfolioWeightingsData?.weightings?.length > 0) {
       setUserPortfolioWeightings(userPortfolioWeightingsData)
     }
 

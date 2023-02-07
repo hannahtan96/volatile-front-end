@@ -83,7 +83,7 @@ const Portfolio = () => {
           } else {
             console.log(response.data)
             reset()
-            navigate('/score')
+            navigate('/portfolio')
           }
 
         })

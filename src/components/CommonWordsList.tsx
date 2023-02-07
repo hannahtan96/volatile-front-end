@@ -8,16 +8,6 @@ interface Word {
   [key: string]: number;
 }
 
-// class CommonWord {
-//   word: string;
-
-//   frequency: number;
-
-//   constructor( word: string, frequency: number ) {
-//     this.word = word
-//     this.frequency = frequency
-//   }
-// }
 
 const CommonWordsList = (props: Word) => {
 
@@ -53,12 +43,11 @@ const CommonWordsList = (props: Word) => {
   }
 
 
-  const bannedWords = ['WHICH','HER','HIM','HAS','SINCE','BETWEEN','BEFORE','IN','THE','AN','A','ITS','OF','THIS','AND','AT','THERE','SHE','HE','HAVE','FROM','BEEN','IS','I','YOU','THAT','WAS','ON','ARE','WITH','BE','OR','HAD','BY','NOT','MOST']
+  const bannedWords = ['COULD','BUT','THEN','IF','IT','TO','WHICH','HER','HIM','HAS','SINCE','BETWEEN','BEFORE','IN','THE','AN','A','ITS','OF','THIS','AND','AT','THERE','SHE','HE','HAVE','FROM','BEEN','IS','I','YOU','THAT','WAS','ON','ARE','WITH','BE','OR','HAD','BY','NOT','MOST']
   let key_id = 0
 
 
   const commonWordsComponent = keyArray
-  // .map(([o_key, o_val]) => [o_key.replace(/[^\w\s]/gi, ""), o_val]) // another filter just in case
     .sort((a, b) => a[1] < b[1] ? 1 : -1)
 
     .map((word) => {
@@ -79,13 +68,9 @@ const CommonWordsList = (props: Word) => {
 
   return (
     <div>
-      {/* <div id='common-words-title'>
-        <Typography variant="button" sx={{ p: 1, textAlign: 'left', fontWeight: 400, fontSize: 18, borderBottom: 1, borderColor: 'lightgray' }}>KEYWORDS</Typography>
-      </div> */}
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tab label="KEYWORDS" />
       </Box>
-
       <ul id='common-words-block'>{commonWordsComponent}</ul>
     </div>
   );

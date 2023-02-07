@@ -7,253 +7,9 @@ import './Score2.css'
 import CommonWordsList from './CommonWordsList';
 import SentimentedWordList from './SentimentedWordList';
 import { Weighting } from '../types/user.type';
-
-
-const netflix = {
-  "date": "20230127",
-  "headliners": [
-      {
-          "confidence": "97",
-          "irony": "NONIRONIC",
-          "score_tag": "N",
-          "text": "‘The Witcher:"
-      },
-      {
-          "confidence": "100",
-          "irony": "NONIRONIC",
-          "score_tag": "P",
-          "text": "Striving to Make Netflix’s Harry and Meghan Series ‘Personal and Raw’"
-      }
-  ],
-  "sentiment_score": 0.5,
-  "sentiments": [
-      {
-          "confidence": "97",
-          "score_tag": "N",
-          "text": "be>late"
-      },
-      {
-          "confidence": "97",
-          "score_tag": "N",
-          "text": "Blood Origin’ Is TV’s Latest Big Fantasy Prequel"
-      },
-      {
-          "confidence": "97",
-          "score_tag": "N",
-          "text": "blood"
-      },
-      {
-          "confidence": "97",
-          "score_tag": "N",
-          "text": "origin"
-      },
-      {
-          "confidence": "100",
-          "score_tag": "P",
-          "text": "strive"
-      },
-      {
-          "confidence": "100",
-          "score_tag": "P",
-          "text": "Striving to Make Netflix’s Harry and Meghan Series"
-      },
-      {
-          "confidence": "100",
-          "score_tag": "P",
-          "text": "Striving to Make Netflix’s Harry and Meghan Series ‘Personal and Raw’"
-      },
-      {
-          "confidence": "100",
-          "score_tag": "P",
-          "text": "serie"
-      },
-      {
-          "confidence": "100",
-          "score_tag": "P",
-          "text": "Netflix"
-      },
-      {
-          "confidence": "100",
-          "score_tag": "P",
-          "text": "Harry"
-      },
-      {
-          "confidence": "100",
-          "score_tag": "P",
-          "text": "Meghan"
-      }
-  ],
-  "ticker": "NFLX",
-  "words": {
-      "1,200": 1,
-      "2019": 12,
-      "A": 13,
-      "AND": 12,
-      "BEEN": 31,
-      "BEFORE": 21,
-      "BY": 13,
-      "COGAN": 11,
-      "COMPANY": 11,
-      "DAN": 13,
-      "DEBUT": 14,
-      "DOCUMENTARY": 21,
-      "EVENTS": 13,
-      "FILMMAKER": 41,
-      "FROM": 12,
-      "GARBUS": 14,
-      "HAS": 15,
-      "HER": 17,
-      "HIGH-PROFILE": 1,
-      "HUSBAND": 20,
-      "IN": 13,
-      "IS": 14,
-      "ITS": 12,
-      "LIZ": 16,
-      "MINI-SERIES": 21,
-      "MOST": 11,
-      "MOST-WATCHED": 51,
-      "NETFLIX’S": 22,
-      "OF": 22,
-      "ONE": 3,
-      "PLACE": 22,
-      "PROJECT": 7,
-      "RUN": 9,
-      "SERIES": 4,
-      "SHOWS": 24,
-      "SINCE": 35,
-      "STORY": 46,
-      "SYNDICATE": 15,
-      "TAKES": 6,
-      "THE": 7,
-      "WHICH": 2,
-      "WITCHER,”": 2,
-      "YEARS": 6,
-      "“THE": 7
-  }
-}
-
-const microsoft = {
-  "date": "20230127",
-  "headliners": [
-      {
-          "confidence": "90",
-          "irony": "IRONIC",
-          "score_tag": "N",
-          "text": "Microsoft Gambles on 'Nice Guy' Strategy to Close Activision Megadeal"
-      },
-      {
-          "confidence": "100",
-          "irony": "NONIRONIC",
-          "score_tag": "N",
-          "text": "Lina Khan, Aiming to Block Microsoft's Activision Deal, Faces a Challenge"
-      }
-  ],
-  "sentiment_score": 0.25,
-  "sentiments": [
-      {
-          "confidence": "97",
-          "score_tag": "N",
-          "text": "be>late"
-      },
-      {
-          "confidence": "97",
-          "score_tag": "N",
-          "text": "Blood Origin’ Is TV’s Latest Big Fantasy Prequel"
-      },
-      {
-          "confidence": "97",
-          "score_tag": "N",
-          "text": "blood"
-      },
-      {
-          "confidence": "97",
-          "score_tag": "N",
-          "text": "origin"
-      },
-      {
-          "confidence": "100",
-          "score_tag": "P",
-          "text": "strive"
-      },
-      {
-          "confidence": "100",
-          "score_tag": "P",
-          "text": "Striving to Make Netflix’s Harry and Meghan Series"
-      },
-      {
-          "confidence": "100",
-          "score_tag": "P",
-          "text": "Striving to Make Netflix’s Harry and Meghan Series ‘Personal and Raw’"
-      },
-      {
-          "confidence": "100",
-          "score_tag": "P",
-          "text": "serie"
-      },
-      {
-          "confidence": "100",
-          "score_tag": "P",
-          "text": "Netflix"
-      },
-      {
-          "confidence": "100",
-          "score_tag": "P",
-          "text": "Harry"
-      },
-      {
-          "confidence": "100",
-          "score_tag": "P",
-          "text": "Meghan"
-      }
-  ],
-  "ticker": "MSFT",
-  "words": {
-      "1,200": 1,
-      "2019": 1,
-      "A": 1,
-      "AND": 1,
-      "BEEN": 1,
-      "BEFORE": 1,
-      "BY": 1,
-      "COGAN": 1,
-      "COMPANY": 1,
-      "DAN": 1,
-      "DEBUT": 1,
-      "DOCUMENTARY": 1,
-      "EVENTS": 1,
-      "FILMMAKER": 1,
-      "FROM": 1,
-      "GARBUS": 1,
-      "HAS": 1,
-      "HER": 1,
-      "HIGH-PROFILE": 1,
-      "HUSBAND": 1,
-      "IN": 1,
-      "IS": 1,
-      "ITS": 1,
-      "LIZ": 1,
-      "MINI-SERIES": 1,
-      "MOST": 1,
-      "MOST-WATCHED": 1,
-      "NETFLIX’S": 1,
-      "OF": 2,
-      "ONE": 1,
-      "PLACE": 1,
-      "PROJECT": 1,
-      "RUN": 1,
-      "SERIES": 1,
-      "SHOWS": 1,
-      "SINCE": 1,
-      "STORY": 1,
-      "SYNDICATE": 1,
-      "TAKES": 1,
-      "THE": 5,
-      "WHICH": 1,
-      "WITCHER,”": 1,
-      "YEARS": 1,
-      "“THE": 1
-  }
-}
+import { getCurrUserPortfolioSentiments } from '../services/user.service';
+import { errorMonitor } from 'events';
+import { Holdings } from './Portfolio';
 
 interface headline {
   confidence: string,
@@ -300,9 +56,9 @@ class CommonWord {
 
 const Score = () => {
 
-  const { user, userPortfolioWeightings, saveUserPortfolioWeightings } = useContext(UserContext) as UserContextType;
+  const { user, userPortfolio, userPortfolioWeightings } = useContext(UserContext) as UserContextType;
 
-  const [positions, setPositions] = useState<positionData[]>([netflix, microsoft])
+  const [positions, setPositions] = useState<positionData[]>([])
   const [weightings, setWeightings] = useState<Weighting[]>([])
   const [sentiment, setSentiment] = useState<number|null>()
   const [userData, setUserData] = useState<onePosition[]>([])
@@ -314,35 +70,48 @@ const Score = () => {
 
 
   useEffect(() => {
-    // console.log(weightings)
-    if ((userPortfolioWeightings?.weightings.length || 0) > 0) {
-      const w = userPortfolioWeightings!.weightings!
-      setWeightings(w)
+    if ((userPortfolio?.portfolio.length || 0 ) > 0) {
+      findSentiments(userPortfolio!.portfolio!)
+    }
 
+  }, [userPortfolio])
+
+  useEffect(() => {
+    if ((userPortfolioWeightings?.weightings.length || 0) > 0) {
+      setWeightings(userPortfolioWeightings!.weightings!)
     }
   }, [userPortfolioWeightings])
 
   useEffect(() => {
-    if (weightings.length > 0) {
+    if (weightings && weightings.length > 0 && positions && positions.length > 0) {
       mapShareWeights()
     }
-
-  }, [weightings])
+  }, [weightings, positions])
 
   useEffect(() => {
-
     if (weightings.length > 0 && userData.length > 0) {
       calculateSentiment()
     }
-
   }, [userData])
 
   useEffect(() => {
-    // let words = selectedPosition?.words
     setCommonWords(selectedPosition?.words)
     setSentimentedWords(selectedPosition?.sentiments || [])
   }, [selectedPosition])
 
+  const findSentiments = (portfolio: Holdings[]) => {
+    console.log(portfolio)
+    if (portfolio.length > 1) {
+      getCurrUserPortfolioSentiments(portfolio)
+      .then((response) => {
+        console.log(response)
+        setPositions(response.portfolio)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+    }
+  }
 
   let percentage_option = {
     style: 'percent',
@@ -389,6 +158,10 @@ const Score = () => {
           fontSize: 44
         },
         labelKey: "ticker",
+        calloutLabel: {
+          fontSize: 16,
+          fontWeight: 'bold'
+        },
         angleKey: "share",
         radiusKey: "sentiment",
         sectorLabelKey: "name",
@@ -415,7 +188,7 @@ const Score = () => {
         },
         sectorLabel: {
           color: "white",
-          // fontSize: 14,
+          fontSize: 14,
           fontWeight: "normal",
           formatter: ({ datum, angleKey }: any) => {
             const value = datum[angleKey];
@@ -457,7 +230,7 @@ const Score = () => {
           (<div id='score-section'>
             <AgChartsReact id="ag" options={options} />
           </div>)
-          : <div>No portfolio registered.</div> }
+          : <div>Loading... or no portfolio is registered.</div> }
 
           <div id='sentimented-words-section' className='p-20'>
             {clicked ? <SentimentedWordList words={sentimentedWords} /> : <div></div>}

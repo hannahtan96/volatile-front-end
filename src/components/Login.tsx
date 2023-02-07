@@ -56,7 +56,7 @@ const Login = () => {
         console.log(response)
         if (response.displayName) {
           saveUser(response);
-          navigate('/score')
+          navigate('/portfolio')
         } else {
           setErrorMessage(response.message);
         }

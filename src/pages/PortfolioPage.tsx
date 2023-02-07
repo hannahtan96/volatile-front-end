@@ -5,8 +5,8 @@ import { UserContextType, Weighting } from "../types/user.type";
 import { UserContext } from '../context/userContext';
 import Portfolio from '../components/Portfolio';
 import EditOneStockForm from '../components/EditOneStockForm';
-import { getCurrUserPortfolio } from '../services/user.service';
-import { Typography } from '@mui/material';
+import { getCurrUserPortfolio, getCurrUserPortfolioWeightings } from '../services/user.service';
+import { Typography, Button } from '@mui/material';
 
 interface Weights {
   ticker: string
@@ -16,11 +16,44 @@ interface Weights {
 
 const PortfolioPage = () => {
 
-  const { user, userPortfolioWeightings } = useContext(UserContext) as UserContextType;
+  const { user, userPortfolioWeightings, saveUserPortfolio, saveUserPortfolioWeightings } = useContext(UserContext) as UserContextType;
 
   const [weightings, setWeightings] = useState<Weighting[]>([])
   const [display, setDisplay] = useState<boolean>(false)
-  const [toEdit, setToEdit] = useState<Weighting>()
+  const [tickerToEdit, setTickerToEdit] = useState<Weighting>()
+  const [sharesToEdit, setSharesToEdit] = useState<number>()
+
+  useEffect(() => {
+
+    if (user?.displayName) {
+      getUserPortfolio()
+      getUserPortfolioWeightings()
+    }
+
+  }, [user])
+
+
+  const getUserPortfolio = () => {
+    getCurrUserPortfolio(user!.localId!)
+      .then((response) => {
+        saveUserPortfolio(response)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  const getUserPortfolioWeightings = () => {
+    getCurrUserPortfolioWeightings(user!.localId!)
+      .then((response) => {
+        console.log(response)
+        saveUserPortfolioWeightings(response)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
 
   useEffect(() => {
     if ((userPortfolioWeightings?.weightings.length || 0) > 0) {
@@ -32,6 +65,24 @@ const PortfolioPage = () => {
   //   console.log()
   //   set
   // }
+
+  const edit = () => {
+    setTickerToEdit({
+      "01. symbol": "NEW",
+      "02. open": "",
+      "03. high": "",
+      "04. low": "",
+      "05. price": "",
+      "06. volume": "",
+      "07. latest trading day": "",
+      "08. previous close": "",
+      "09. change": "",
+      "10. change percent": "",
+      "11. shares": 0,
+      "12. proportion": 0,
+      "13. name": ""
+    })
+  }
 
 
   let percentage_option = {
@@ -94,7 +145,8 @@ const PortfolioPage = () => {
         listeners: {
           nodeClick: ({ datum }: any) => {
             console.log(datum)
-            setToEdit(datum)
+            setTickerToEdit(datum)
+            // setSharesToEdit(datum["11. shares"])
           }
         },
         shadow: {
@@ -160,21 +212,23 @@ const PortfolioPage = () => {
     (user?.displayName ?
       (
         <section>
-          <h2>YOUR PORTFOLIO</h2>
+          <Typography variant="h4" m={4} p={1} borderBottom={'3px solid lightblue'} >CURRENT PORTFOLIO</Typography>
           {display ?
             (<div id='portfolio-section' className='p-20'>
               <AgChartsReact options={options} />
             </div>)
           :  <div></div>}
 
-          {toEdit?.['01. symbol'] ?
+          {tickerToEdit ?
             (<div id='edit-portfolio-section' className='p-20'>
-              <EditOneStockForm {...toEdit} />
+              <EditOneStockForm {...tickerToEdit} />
             </div>)
           :  <div></div>}
 
+          <Button type="submit" variant="outlined" onClick={edit} >ADD ONE</Button>
+
           <div id='new-portfolio-form' className='p-20'>
-            <Typography variant="button">NEW PORTFOLIO</Typography>
+            <Typography variant="h4" p={1} borderBottom={'2px solid lightblue'} >NEW PORTFOLIO</Typography>
             <Portfolio />
           </div>
 

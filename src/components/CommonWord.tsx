@@ -30,7 +30,7 @@ const CommonWord = (props: CommonWordProps) => {
         aria-haspopup="true"
         onMouseEnter={handlePopoverOpen}
         onMouseLeave={handlePopoverClose}
-        sx={{ fontSize: 16, backgroundColor: {backgroundColor}, borderRadius: 1, padding: 0.3 }}
+        sx={{ fontSize: 14, backgroundColor: {backgroundColor}, borderRadius: 1, padding: 0.3 }}
       >
         {props.word}
       </Typography>

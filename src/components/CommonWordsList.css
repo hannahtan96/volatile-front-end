@@ -8,10 +8,5 @@
   overflow: auto;
   gap: 6px;
   margin: 0;
-}
-
-ul {
-  padding-top: 24px;
-  padding-left: 0;
-  list-style: none;
+  padding: 24px;
 }

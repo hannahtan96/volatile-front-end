@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { UserContextType } from "../types/user.type";
 import { UserContext } from '../context/userContext';
 import { AgChartsReact } from 'ag-charts-react';
-import './Score2.css'
+import './Score.css'
 import CommonWordsList from './CommonWordsList';
 import SentimentedWordList from './SentimentedWordList';
 import { Weighting } from '../types/user.type';
@@ -232,10 +232,10 @@ const Score = () => {
           </div>)
           : <div>Loading... or no portfolio is registered.</div> }
 
-          <div id='sentimented-words-section' className='p-20'>
+          <div id='sentimented-words-section' className='p-10'>
             {clicked ? <SentimentedWordList words={sentimentedWords} /> : <div></div>}
           </div>
-          <div id='common-words-section' className='p-20'>
+          <div id='common-words-section' className='p-10'>
             {clicked ? <CommonWordsList {...commonWords} /> : <div></div>}
           </div>
         </div>

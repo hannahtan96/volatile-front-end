@@ -103,7 +103,7 @@ const SentimentedWordList = ( props: sWLProps) => {
           <Tab label="Negative" {...a11yProps(1)} />
         </Tabs>
       </Box>
-      <TabPanel value={value} index={0}>
+      <TabPanel value={value} index={0} >
         <div className='sentimented-words-block'>
           {positiveComponents}
         </div>

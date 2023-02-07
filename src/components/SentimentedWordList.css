@@ -4,11 +4,4 @@
   overflow: hidden;
   gap: 6px;
   margin: 0;
-  overflow: auto;
-}
-
-ul {
-  padding-top: 24px;
-  padding-left: 0;
-  list-style: none;
 }

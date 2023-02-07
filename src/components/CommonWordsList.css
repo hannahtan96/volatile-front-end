@@ -5,7 +5,7 @@
 #common-words-block {
   display: flex;
   flex-wrap: wrap;
-  overflow: auto;
+  /* overflow:auto;  */
   gap: 6px;
   margin: 0;
   padding: 24px;

@@ -2,6 +2,8 @@ import React from 'react';
 import { useEffect } from 'react';
 import { logout } from '../services/auth.service';
 import { useNavigate } from 'react-router-dom';
+import { Box, Typography } from '@mui/material';
+import NotLoggedInLinks from '../components/NotLoggedInLinks';
 
 const LogoutPage = () => {
 
@@ -13,7 +15,9 @@ const LogoutPage = () => {
   }, [])
 
   return (
-    <div>You've successfully logged out.</div>
+    <Box>
+      <NotLoggedInLinks />
+    </Box>
   )
 
 

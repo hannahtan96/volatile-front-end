@@ -9,7 +9,6 @@ const UserProvider = ({ children }: any) => {
   const [user, setUser] = useState<User>();
   const [userPortfolio, setUserPortfolio] = useState<UserPortfolio>()
   const [userPortfolioWeightings, setUserPortfolioWeightings] = useState<Weightings>()
-  // const [totalWeight, setTotalWeight] = useState<number>()
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('user') || '{}')
@@ -42,7 +41,6 @@ const UserProvider = ({ children }: any) => {
   }
 
   const saveUserPortfolioWeightings = (userPortfolioWeightings: Weightings) => {
-    // console.log(userPortfolioWeightings)
     if (userPortfolioWeightings.weightings.length > 0) {
       setUserPortfolioWeightings(userPortfolioWeightings)
     }

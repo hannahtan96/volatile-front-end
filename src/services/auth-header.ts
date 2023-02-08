@@ -1,4 +1,5 @@
 export default function authHeader() {
+
   const userStr = localStorage.getItem('user');
   // const accessToken = localStorage.getItem('accessToken')
   let user = null;
@@ -7,8 +8,10 @@ export default function authHeader() {
   }
 
   if (user && user.idToken) {
-    return { 'Authorization': user.idToken, 'Access-Control-Allow-Origin': '*' }
+    let token = user.idToken;
+    return { 'Authorization': token!, 'Access-Control-Allow-Origin': '*' }
   } else {
     return { 'Authorization': '', 'Access-Control-Allow-Origin': '*' }
   }
+
 }

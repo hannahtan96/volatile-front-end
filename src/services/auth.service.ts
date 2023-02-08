@@ -29,14 +29,14 @@ export const registerNewUser = (firstName: string, lastName: string, username: s
   })
 };
 
-export const getCurrentUser = () => {
-  const userStr = localStorage.getItem('user');
-  if (userStr) {
-    return JSON.parse(userStr);
-  } else {
-    return null;
-  }
-}
+// export const getCurrentUser = () => {
+//   const userStr = localStorage.getItem('user');
+//   if (userStr) {
+//     return JSON.parse(userStr);
+//   } else {
+//     return null;
+//   }
+// }
 
 export const logout = () => {
   localStorage.removeItem('user');

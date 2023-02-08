@@ -43,7 +43,7 @@ export const editPortfolio = ( localId: string, data: formValues ) => {
 }
 
 export const getCurrUserPortfolio = (localId: string) => {
-  // print(f"{API_URL}portfolio{localId}")
+  console.log(`in getCurrUserPortfolio for ${localId}`)
   return axios.get(API_URL + '/portfolio/' + localId, { headers: authHeader() })
     .then((response) => {
       // console.log(response)
@@ -59,8 +59,7 @@ export const getCurrUserPortfolio = (localId: string) => {
 };
 
 export const getCurrUserPortfolioWeightings = (localId: string) => {
-  // print(f"{API_URL}portfolio{localId}")
-  // console.log(localId)
+  console.log(`in getCurrUserPortfolioWeightings for ${localId}`)
   return axios.get(API_URL + '/portfolio/' + localId + '/tickers', { headers: authHeader() })
     .then((response) => {
       if (response.data) {
@@ -75,7 +74,7 @@ export const getCurrUserPortfolioWeightings = (localId: string) => {
 };
 
 export const getCurrUserPortfolioSentiments = (portfolio : Holdings[]) => {
-  console.log(portfolio)
+  console.log(`in getCurrUserPortfolioWeightings for ${portfolio}`)
   return axios.post(API_URL + '/sentiments', {
     portfolio
     }, { headers: authHeader() })

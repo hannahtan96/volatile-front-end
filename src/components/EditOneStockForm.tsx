@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { UserContextType, Weighting } from "../types/user.type";
 import { UserContext } from '../context/userContext';
-import { useNavigate } from 'react-router-dom';
 import { editPortfolio } from '../services/user.service';
-import { Box, Grid, TextField, Typography, Button } from '@mui/material';
-import { useForm, Controller, useFormState, set } from "react-hook-form";
+import { Grid, TextField, Button } from '@mui/material';
+import { useForm, Controller } from "react-hook-form";
 
 export interface formValues {
   ticker: string
@@ -23,20 +21,15 @@ const EditOneStockForm = (datum: Weighting) => {
     // setDisplay(false)
     reset()
     if (datum['01. symbol']) {
-      console.log(datum)
       setDisplay(true)
-      // console.log(datum['01. symbol'])
       setTicker(datum['01. symbol'])
       setShares(datum['11. shares'])
-
     }
 
   }, [datum])
 
-  const navigate = useNavigate()
   const [ticker, setTicker] = useState<string>()
   const [shares, setShares] = useState<number>()
-  // const [defaultValues, setDefaultValues] = useState<Weighting>(datum);
 
   const { register, handleSubmit, control, reset } = useForm<formValues>({
     defaultValues: {
@@ -52,7 +45,7 @@ const EditOneStockForm = (datum: Weighting) => {
           console.log(response)
           reset()
           setDisplay(false)
-          navigate('/portfolio')
+          window.location.reload()
       })
       .catch((error) => {
         const resMessage =

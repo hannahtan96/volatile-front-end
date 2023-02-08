@@ -6,7 +6,8 @@ import { UserContext } from '../context/userContext';
 import Portfolio from '../components/Portfolio';
 import EditOneStockForm from '../components/EditOneStockForm';
 import { getCurrUserPortfolio, getCurrUserPortfolioWeightings } from '../services/user.service';
-import { Typography, Button } from '@mui/material';
+import { Typography, Button, Box } from '@mui/material';
+import NotLoggedInLinks from '../components/NotLoggedInLinks';
 
 interface Weights {
   ticker: string
@@ -125,7 +126,6 @@ const PortfolioPage = () => {
         },
         sectorLabel: {
           color: "white",
-          // fontSize: 14,
           fontWeight: "normal",
           formatter: ({ datum, angleKey }: any) => {
             const value = datum[angleKey];
@@ -212,9 +212,14 @@ const PortfolioPage = () => {
     (user?.displayName ?
       (
         <section>
-          <Typography variant="h4" m={4} p={1} borderBottom={'3px solid lightblue'} >CURRENT PORTFOLIO</Typography>
+          <Box p={2} textAlign={'center'}>
+            <Typography variant="h4" p={1} >CURRENT PORTFOLIO</Typography>
+            <Typography variant="body2" sx={{ color: 'gray', fontSize: 14, fontStyle: 'italic', fontWeight: 400 }}>
+              To edit existing holdings, directly click on the holding and edit the number of shares.
+            </Typography>
+          </Box>
           {display ?
-            (<div id='portfolio-section' className='p-20'>
+            (<div id='portfolio-section'>
               <AgChartsReact options={options} />
             </div>)
           :  <div></div>}
@@ -228,12 +233,12 @@ const PortfolioPage = () => {
           <Button type="submit" variant="outlined" onClick={edit} >ADD ONE</Button>
 
           <div id='new-portfolio-form' className='p-20'>
-            <Typography variant="h4" p={1} borderBottom={'2px solid lightblue'} >NEW PORTFOLIO</Typography>
+            <Typography variant="h4" p={1} borderBottom={'1px solid #1976d2'} >NEW PORTFOLIO</Typography>
             <Portfolio />
           </div>
 
         </section>
-      ) : <div>You need to be logged in!</div>)
+      ) : <NotLoggedInLinks />)
   )
 
 

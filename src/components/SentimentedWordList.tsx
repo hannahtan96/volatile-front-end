@@ -30,7 +30,7 @@ const TabPanel = (props: TabPanelProps) => {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          <Typography component='span'>{children}</Typography>
         </Box>
       )}
     </div>
@@ -96,8 +96,8 @@ const SentimentedWordList = ( props: sWLProps) => {
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+    <Box sx={{ width: '100% '}}>
+      <Box sx={{ width: '100%', borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="Positive" {...a11yProps(0)} />
           <Tab label="Negative" {...a11yProps(1)} />
@@ -109,7 +109,7 @@ const SentimentedWordList = ( props: sWLProps) => {
         </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
-      <div className='sentimented-words-block'>
+        <div className='sentimented-words-block'>
           {negativeComponents}
         </div>
       </TabPanel>

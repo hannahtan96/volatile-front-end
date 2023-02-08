@@ -11,26 +11,22 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { User, UserContextType } from '../types/user.type';
+import { UserContextType } from '../types/user.type';
 import { UserContext } from '../context/userContext';
 import './MenuAppBar.css'
 
-interface MenuAppBarProps {
-  user: User | null
-}
-
-const pages = ['Portfolio', 'Score', 'Login', 'Register'];
-const settings = ['Profile', 'Account', 'Logout'];
+const pages = ['score', 'portfolio', 'login', 'register'];
+const settings = ['logout'];
 
 const ResponsiveAppBar = () => {
 
   const { user } = useContext(UserContext) as UserContextType;
 
+  // const [pages, setPages] = useState<string[]>()
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
-    console.log(event)
     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
@@ -96,9 +92,9 @@ const ResponsiveAppBar = () => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
+              {pages!.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu} component="a" href={`/${page}`}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography textAlign="center" sx={{ textTransform: 'capitalize' }}>{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -123,7 +119,7 @@ const ResponsiveAppBar = () => {
             VOLATILE
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+            {pages!.map((page) => (
               <Link to={`/${page}`}>
                 <Button
                   key={page}
@@ -161,7 +157,7 @@ const ResponsiveAppBar = () => {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu} component="a" href={`/${setting}`}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  <Typography textAlign="center" sx={{ textTransform: 'capitalize' }}>{setting}</Typography>
                 </MenuItem>
               ))}
             </Menu>

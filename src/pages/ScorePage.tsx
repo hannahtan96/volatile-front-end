@@ -5,6 +5,7 @@ import { UserContext } from '../context/userContext';
 import { getCurrUserPortfolio, getCurrUserPortfolioWeightings } from '../services/user.service';
 import Score from '../components/Score';
 import { Weighting } from '../types/user.type';
+import NotLoggedInLinks from '../components/NotLoggedInLinks';
 
 
 const ScorePage = () => {
@@ -12,7 +13,7 @@ const ScorePage = () => {
   const { user } = useContext(UserContext) as UserContextType;
 
   return (
-    (user?.displayName ? <Score /> : <div>You need to be logged in!</div>)
+    (user?.displayName ? <Score /> : <NotLoggedInLinks />)
   )
 
 }

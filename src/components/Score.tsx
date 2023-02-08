@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import { useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { UserContextType } from "../types/user.type";
 import { UserContext } from '../context/userContext';
 import { AgChartsReact } from 'ag-charts-react';
@@ -8,8 +7,9 @@ import CommonWordsList from './CommonWordsList';
 import SentimentedWordList from './SentimentedWordList';
 import { Weighting } from '../types/user.type';
 import { getCurrUserPortfolioSentiments } from '../services/user.service';
-import { errorMonitor } from 'events';
 import { Holdings } from './Portfolio';
+import { Box, Typography } from '@mui/material';
+import { CircularProgress } from '@material-ui/core';
 
 interface headline {
   confidence: string,
@@ -44,16 +44,6 @@ export interface onePosition {
   sentiment: number
 }
 
-class CommonWord {
-  word: string;
-  frequency: number;
-
-  constructor( word: string, frequency: number ) {
-    this.word = word
-    this.frequency = frequency
-  }
-}
-
 const Score = () => {
 
   const { user, userPortfolio, userPortfolioWeightings } = useContext(UserContext) as UserContextType;
@@ -62,6 +52,7 @@ const Score = () => {
   const [weightings, setWeightings] = useState<Weighting[]>([])
   const [sentiment, setSentiment] = useState<number|null>()
   const [userData, setUserData] = useState<onePosition[]>([])
+  const [loadingMessage, setLoadingMessage] = useState<string>('No portfolio is registered.')
 
   const [clicked, setClicked] = useState<boolean>(false)
   const [selectedPosition, setSelectedPosition] = useState<positionData|null>()
@@ -72,6 +63,7 @@ const Score = () => {
   useEffect(() => {
     if ((userPortfolio?.portfolio.length || 0 ) > 0) {
       findSentiments(userPortfolio!.portfolio!)
+      setLoadingMessage('Loading...')
     }
 
   }, [userPortfolio])
@@ -226,11 +218,17 @@ const Score = () => {
     <section id='score-page'>
       <div id='score-flex-container'>
 
-      { (sentiment! > 0) ?
+      { sentiment! > 0 ?
           (<div id='score-section'>
             <AgChartsReact id="ag" options={options} />
-          </div>)
-          : <div>Loading... or no portfolio is registered.</div> }
+          </div>) :
+          (<Typography variant="h1" display="block" paddingTop={5} sx={{ fontFamily: 'serif', fontSize: 75, fontWeight: 900, color: 'lightgray', fontStyle: 'italic', letterSpacing: -1 }}>
+            {loadingMessage}
+            {loadingMessage === "Loading..." ?
+              (<Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <CircularProgress color='inherit' />
+                </Box>) : ""}
+          </Typography>)}
 
           <div id='sentimented-words-section' className='p-10'>
             {clicked ? <SentimentedWordList words={sentimentedWords} /> : <div></div>}

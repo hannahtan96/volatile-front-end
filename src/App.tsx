@@ -1,6 +1,6 @@
 // import React, { createContext, useEffect, useState } from 'react';
 import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 // import { getCurrentUser } from './services/auth.service';
 import Layout from './pages/Layout';
 import HomePage from './pages/HomePage';
@@ -25,6 +25,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Layout />}>
+              <Route path='' element={<Navigate replace to="/home" />} />
               <Route path="home" element={<HomePage />} />
               <Route path="portfolio" element={<PortfolioPage />} />
               <Route path="score" element={<ScorePage />} />

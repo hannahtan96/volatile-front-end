@@ -22,6 +22,7 @@ const PortfolioPage = () => {
   const [weightings, setWeightings] = useState<Weighting[]>([])
   const [display, setDisplay] = useState<boolean>(false)
   const [tickerToEdit, setTickerToEdit] = useState<Weighting>()
+  const [errorMessage, setErrorMessage] = useState<string>()
   const [sharesToEdit, setSharesToEdit] = useState<number>()
 
   useEffect(() => {
@@ -48,7 +49,11 @@ const PortfolioPage = () => {
     getCurrUserPortfolioWeightings(user!.localId!)
       .then((response) => {
         console.log(response)
-        saveUserPortfolioWeightings(response)
+        if (response.weightings) {
+          saveUserPortfolioWeightings(response)
+        } else if (response.error) {
+          setErrorMessage(response.error)
+        }
       })
       .catch((error) => {
         console.log(error)
@@ -62,10 +67,6 @@ const PortfolioPage = () => {
     }
   }, [userPortfolioWeightings])
 
-  // const editHoldings = (datum: any) => {
-  //   console.log()
-  //   set
-  // }
 
   const edit = () => {
     setTickerToEdit({
@@ -209,36 +210,40 @@ const PortfolioPage = () => {
 
 
   return (
-    (user?.displayName ?
-      (
-        <section>
-          <Box p={2} textAlign={'center'}>
-            <Typography variant="h4" p={1} >CURRENT PORTFOLIO</Typography>
-            <Typography variant="body2" sx={{ color: 'gray', fontSize: 14, fontStyle: 'italic', fontWeight: 400 }}>
-              To edit existing holdings, directly click on the holding and edit the number of shares.
-            </Typography>
-          </Box>
-          {display ?
-            (<div id='portfolio-section'>
-              <AgChartsReact options={options} />
-            </div>)
-          :  <div></div>}
+      <section>
 
-          {tickerToEdit ?
-            (<div id='edit-portfolio-section' className='p-20'>
-              <EditOneStockForm {...tickerToEdit} />
-            </div>)
-          :  <div></div>}
+        {user?.displayName ?
+          (<div>
+            <Box p={2} textAlign={'center'}>
+              <Typography variant="h4" p={1} >CURRENT PORTFOLIO</Typography>
+              <Typography variant="body2" sx={{ color: 'gray', fontSize: 14, fontStyle: 'italic', fontWeight: 400 }}>
+                To edit existing holdings, directly click on the holding and edit the number of shares.
+              </Typography>
+            </Box>
+            {display ?
+              (<div id='portfolio-section'>
+                <AgChartsReact options={options} />
+              </div>)
+            :  <div></div>}
 
-          <Button type="submit" variant="outlined" onClick={edit} >ADD ONE</Button>
+            {tickerToEdit ?
+              (<div id='edit-portfolio-section' className='p-20'>
+                <EditOneStockForm {...tickerToEdit} />
+              </div>)
+            :  <div></div>}
 
-          <div id='new-portfolio-form' className='p-20'>
-            <Typography variant="h4" p={1} borderBottom={'1px solid #1976d2'} >NEW PORTFOLIO</Typography>
-            <Portfolio />
+            <Button type="submit" variant="outlined" onClick={edit} >ADD ONE</Button>
+
+            <div id='new-portfolio-form' className='p-20'>
+              <Typography variant="h4" p={1} borderBottom={'1px solid #1976d2'} >NEW PORTFOLIO</Typography>
+              <Portfolio />
+            </div>
+
+            {errorMessage ? <Typography variant="body2" p={1} sx={{ width: '400px', border: 1, borderColor: 'red'}}>{errorMessage}</Typography> : ""}
           </div>
+          ) : <NotLoggedInLinks />}
 
         </section>
-      ) : <NotLoggedInLinks />)
   )
 
 

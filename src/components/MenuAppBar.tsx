@@ -135,8 +135,7 @@ const ResponsiveAppBar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                {user ?
-                <Typography className='curr-user-display' textAlign="center">{user.displayName}</Typography> : ""}
+                {user ? <Typography className='curr-user-display' textAlign="center">{user.displayName}</Typography> : ""}
               </IconButton>
             </Tooltip>
             <Menu

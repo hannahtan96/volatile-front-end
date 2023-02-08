@@ -53,6 +53,7 @@ const Score = () => {
   const [sentiment, setSentiment] = useState<number|null>()
   const [userData, setUserData] = useState<onePosition[]>([])
   const [loadingMessage, setLoadingMessage] = useState<string>('No portfolio is registered.')
+  const [errorMessage, setErrorMessage] = useState<string>()
 
   const [clicked, setClicked] = useState<boolean>(false)
   const [selectedPosition, setSelectedPosition] = useState<positionData|null>()
@@ -101,6 +102,7 @@ const Score = () => {
       })
       .catch((error) => {
         console.log(error)
+        setErrorMessage('There\'s been an error in in calculating your portfolio.')
       })
     }
   }
@@ -222,13 +224,15 @@ const Score = () => {
           (<div id='score-section'>
             <AgChartsReact id="ag" options={options} />
           </div>) :
-          (<Typography variant="h1" display="block" paddingTop={5} sx={{ fontFamily: 'serif', fontSize: 75, fontWeight: 900, color: 'lightgray', fontStyle: 'italic', letterSpacing: -1 }}>
+          (<Typography variant="h1" display="block" paddingTop={5} sx={{ fontSize: 50, fontWeight: 300, color: 'gray', letterSpacing: -1 }}>
             {loadingMessage}
             {loadingMessage === "Loading..." ?
               (<Box sx={{ display: 'flex', justifyContent: 'center' }}>
                 <CircularProgress color='inherit' />
                 </Box>) : ""}
           </Typography>)}
+
+          {errorMessage ? <Typography variant="h1" display="block" paddingTop={5} sx={{ fontSize: 20, fontWeight: 300, color: 'black', letterSpacing: -1 }}>{errorMessage}</Typography> : ""}
 
           <div id='sentimented-words-section' className='p-10'>
             {clicked ? <SentimentedWordList words={sentimentedWords} /> : <div></div>}

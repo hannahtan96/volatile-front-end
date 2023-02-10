@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { UserContextType, Weighting } from "../types/user.type";
 import { UserContext } from '../context/userContext';
-import { editPortfolio } from '../services/user.service';
+import { confirmTicker, editPortfolio } from '../services/user.service';
 import { Grid, TextField, Button } from '@mui/material';
 import { useForm, Controller } from "react-hook-form";
 
@@ -27,6 +27,8 @@ const EditOneStockForm = (datum: Weighting) => {
 
   const [ticker, setTicker] = useState<string>()
   const [shares, setShares] = useState<number>()
+  const [errorMessage, setErrorMessage] = useState<string>()
+  const [sharesToSelect, setSharesToSelect] = useState<any[]>()
 
   const { register, handleSubmit, control, reset } = useForm<formValues>({
     defaultValues: {
@@ -36,6 +38,26 @@ const EditOneStockForm = (datum: Weighting) => {
   });
 
   const handleOnSumbit = (data: formValues) => {
+
+    confirmTicker(user!.localId!, data)
+      .then((response) => {
+        console.log(response)
+        if (response.length === 0) {
+          setErrorMessage(`No companies with ${data.ticker}`)
+        } else if (response.length >= 1) {
+          console.log(response)
+          setSharesToSelect(response)
+        }
+        reset()
+        setDisplay(false)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+
+  }
+
+  const handleOnSelect = (data: formValues) => {
 
     editPortfolio(user!.localId!, data)
       .then((response) => {

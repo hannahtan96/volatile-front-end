@@ -3,6 +3,7 @@ import authHeader from "./auth-header";
 import { Holdings } from '../components/Portfolio';
 import { formValues } from "../components/EditOneStockForm";
 import { API_URL } from "./auth.service";
+import { local } from "d3";
 
 export const logPortfolio = ( user: string, email: string, localId: string, portfolio: Holdings[] ) => {
   return axios.post(API_URL + '/portfolio/new', {
@@ -17,6 +18,24 @@ export const logPortfolio = ( user: string, email: string, localId: string, port
       localStorage.setItem('userPortfolio', JSON.stringify(response.data))
     }
     return response.data
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+}
+
+export const confirmTicker = ( localId: string, data: formValues ) => {
+  return axios.post(API_URL + '/ticker', {
+    data
+  }, { headers: authHeader() })
+  .then((response) => {
+    if (response.data.tickers.length === 0) {
+      return []
+    } else if (response.data.tickers.length === 1) {
+      editPortfolio(localId, data)
+    } else {
+      return response.data.tickers
+    }
   })
   .catch((err) => {
     console.log(err)

@@ -8,6 +8,7 @@ import EditOneStockForm from '../components/EditOneStockForm';
 import { getCurrUserPortfolio, getCurrUserPortfolioWeightings } from '../services/user.service';
 import { Typography, Button, Box } from '@mui/material';
 import NotLoggedInLinks from '../components/NotLoggedInLinks';
+import { autoType } from 'd3';
 
 const PortfolioPage = () => {
 
@@ -227,7 +228,7 @@ const PortfolioPage = () => {
               <Portfolio />
             </div>
 
-            {errorMessage ? <Typography variant="body2" p={1} sx={{ width: '400px', border: 1, borderColor: 'red'}}>{errorMessage}</Typography> : ""}
+            {errorMessage ? <Typography variant="body2" p={1} m={'auto'} sx={{ width: '400px', border: 1, borderColor: 'red'}}>{errorMessage}</Typography> : ""}
           </div>
           ) : <NotLoggedInLinks />}
 

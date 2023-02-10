@@ -1,5 +1,5 @@
 // https://codesandbox.io/s/eager-wiles-xkz3qg?file=/src/App.js:0-8602
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import { useForm, Controller, useFieldArray } from "react-hook-form";
 import { logPortfolio } from "../services/user.service";
 import {
@@ -12,7 +12,6 @@ import { makeStyles } from "@material-ui/core";
 import { UserContextType } from "../types/user.type";
 import { UserContext } from '../context/userContext';
 import './Portfolio.css'
-import { useNavigate } from 'react-router-dom';
 
 
 export interface Holdings {
@@ -41,7 +40,7 @@ const useStyles = makeStyles(theme => ({
 
 const Portfolio = () => {
 
-  const { user, saveUserPortfolioWeightings } = useContext(UserContext) as UserContextType;
+  const { user } = useContext(UserContext) as UserContextType;
   // const [potentialHoldings, setPotentialHoldings] = useState<AAOutput[]>([])
   const [badTickerError, setBadTickerError] = useState<string>('')
 
@@ -53,8 +52,6 @@ const Portfolio = () => {
     // }, [userPortfolio])
 
     const classes = useStyles();
-    const navigate = useNavigate()
-
 
     const { control, handleSubmit, reset } = useForm({
       reValidateMode: "onBlur"

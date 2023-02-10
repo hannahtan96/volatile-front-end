@@ -1,5 +1,5 @@
 import { useState, SyntheticEvent, useEffect } from 'react';
-import { onePosition, sentiment } from './Score'
+import { sentiment } from './Score'
 import { Box, Tabs, Tab } from '@mui/material'
 import { Typography } from '@material-ui/core';
 import SentimentedWord from './SentimentedWord';

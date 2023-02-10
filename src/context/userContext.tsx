@@ -1,6 +1,4 @@
 import { createContext, useEffect, useState } from "react";
-import axios from "axios";
-// import User, UserPortfolio, { UserContextType } from "../types/user.type";
 import { User, UserPortfolio, UserContextType, Weightings } from "../types/user.type";
 
 export const UserContext = createContext<UserContextType | null>(null);

@@ -9,21 +9,13 @@ import { getCurrUserPortfolio, getCurrUserPortfolioWeightings } from '../service
 import { Typography, Button, Box } from '@mui/material';
 import NotLoggedInLinks from '../components/NotLoggedInLinks';
 
-interface Weights {
-  ticker: string
-  shares: number
-  // weight:
-}
-
 const PortfolioPage = () => {
 
   const { user, userPortfolioWeightings, saveUserPortfolio, saveUserPortfolioWeightings } = useContext(UserContext) as UserContextType;
 
-  const [weightings, setWeightings] = useState<Weighting[]>([])
   const [display, setDisplay] = useState<boolean>(false)
   const [tickerToEdit, setTickerToEdit] = useState<Weighting>()
   const [errorMessage, setErrorMessage] = useState<string>()
-  const [sharesToEdit, setSharesToEdit] = useState<number>()
 
   useEffect(() => {
 
@@ -85,7 +77,6 @@ const PortfolioPage = () => {
       "13. name": ""
     })
   }
-
 
   let percentage_option = {
     style: 'percent',

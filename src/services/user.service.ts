@@ -1,11 +1,8 @@
 import axios from "axios";
 import authHeader from "./auth-header";
 import { Holdings } from '../components/Portfolio';
-import { Weighting } from "../types/user.type";
 import { formValues } from "../components/EditOneStockForm";
-import { onePosition } from "../components/Score";
-
-export const API_URL = 'http://127.0.0.1:5000/api'
+import { API_URL } from "./auth.service";
 
 export const logPortfolio = ( user: string, email: string, localId: string, portfolio: Holdings[] ) => {
   return axios.post(API_URL + '/portfolio/new', {

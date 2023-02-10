@@ -220,7 +220,7 @@ const Score = () => {
     <section id='score-page'>
       <div id='score-flex-container'>
 
-      { sentiment! > 0 ?
+      { sentiment! ?
           (<div id='score-section'>
             <AgChartsReact id="ag" options={options} />
           </div>) :

@@ -42,7 +42,7 @@ const CommonWordsList = (props: Word) => {
   }
 
 
-  const bannedWords = ['WHAT','WHERE','HOW','WHILE','TOO','MORE','AS','US','THEY','FOR','CAN','SEE','ABOUT','OUR','COULD','BUT','THEN','IF','IT','TO','WHICH','HER','HIM','HAS','SINCE','BETWEEN','BEFORE','IN','THE','AN','A','ITS','OF','THIS','AND','AT','THERE','SHE','HE','HAVE','FROM','BEEN','IS','I','YOU','THAT','WAS','ON','ARE','WITH','BE','OR','HAD','BY','NOT','MOST']
+  const bannedWords = ['SO','MY',"I'M",'ME','WHAT','WHERE','HOW','WHILE','TOO','MORE','AS','US','THEY','FOR','CAN','SEE','ABOUT','OUR','COULD','BUT','THEN','IF','IT','TO','WHICH','HER','HIM','HAS','SINCE','BETWEEN','BEFORE','IN','THE','AN','A','ITS','OF','THIS','AND','AT','THERE','SHE','HE','HAVE','FROM','BEEN','IS','I','YOU','THAT','WAS','ON','ARE','WITH','BE','OR','HAD','BY','NOT','MOST']
   let key_id = 0
 
 

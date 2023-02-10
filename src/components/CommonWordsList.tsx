@@ -41,10 +41,12 @@ const CommonWordsList = (props: Word) => {
     }
   }
 
-
-  const bannedWords = ['SO','MY',"I'M",'ME','WHAT','WHERE','HOW','WHILE','TOO','MORE','AS','US','THEY','FOR','CAN','SEE','ABOUT','OUR','COULD','BUT','THEN','IF','IT','TO','WHICH','HER','HIM','HAS','SINCE','BETWEEN','BEFORE','IN','THE','AN','A','ITS','OF','THIS','AND','AT','THERE','SHE','HE','HAVE','FROM','BEEN','IS','I','YOU','THAT','WAS','ON','ARE','WITH','BE','OR','HAD','BY','NOT','MOST']
+  const bannedWords = ['THE','A','AN','HE','HIM','HIS','I','MY','ME','SHE','HER','HERS','WE','OUR','THEY','US',
+  'THEM','THEIRS','THEIR','EVERY','EVER','ANY','ANYONE','ANYWHERE','HAS','HAD','HAVE','TOO','IS', 'IN','OFF',
+  'WAS','WILL','BE','SO','AND','OUR','COULD','SHOULD','WOULD','BY','FROM','FOR','NOT','ARE','THIS','THAT','AT',
+  'IT','ITS','TO','WITH','ARE','WHO','WHERE','WHY','WHILE','WHAT','WHICH','WHEN','HOW','AS','ON','ABOUT','IF',
+  'OF','HOWEVER','BUT','ONE','TWO','THREE','DOES','DO','BEEN','SUCH','MUCH','MANY']
   let key_id = 0
-
 
   const commonWordsComponent = keyArray
     .sort((a, b) => a[1] < b[1] ? 1 : -1)

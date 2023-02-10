@@ -62,19 +62,16 @@ const PortfolioPage = () => {
 
   const edit = () => {
     setTickerToEdit({
-      "01. symbol": "NEW",
-      "02. open": "",
-      "03. high": "",
-      "04. low": "",
-      "05. price": "",
-      "06. volume": "",
-      "07. latest trading day": "",
-      "08. previous close": "",
-      "09. change": "",
-      "10. change percent": "",
-      "11. shares": 0,
-      "12. proportion": 0,
-      "13. name": ""
+      "c": 0,
+      "h": 0,
+      "l": 0,
+      "o": 0,
+      "pc": 0,
+      "t": 0,
+      "symbol": "NEW",
+      "shares": 0,
+      "proportion": 0,
+      "name": ""
     })
   }
 
@@ -94,15 +91,15 @@ const PortfolioPage = () => {
     series: [
       {
         type: "pie",
-        labelKey: "01. symbol",
+        labelKey: "symbol",
         calloutLabel: {
           fontSize: 16,
           fontWeight: '600',
           offset: 5
         },
-        angleKey: "12. proportion",
-        radiusKey: "05. price",
-        sectorLabelKey: "13. name",
+        angleKey: "proportion",
+        radiusKey: "o",
+        sectorLabelKey: "name",
         innerRadiusRatio: 0.70,
         fills: colors,
         fillOpacity: 0.70,
@@ -150,13 +147,13 @@ const PortfolioPage = () => {
       },
       {
         type: 'pie',
-        calloutLabelKey: '01. symbol',
+        calloutLabelKey: 'symbol',
         calloutLabel: {
           fontSize: 12,
           offset: 0
         },
-        angleKey: '11. shares',
-        sectorLabelKey: '13. name',
+        angleKey: 'shares',
+        sectorLabelKey: 'name',
         outerRadiusRatio: 0.4,
         innerRadiusRatio: 0.25,
         showInLegend: false,

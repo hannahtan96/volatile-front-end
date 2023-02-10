@@ -41,15 +41,7 @@ const useStyles = makeStyles(theme => ({
 const Portfolio = () => {
 
   const { user } = useContext(UserContext) as UserContextType;
-  // const [potentialHoldings, setPotentialHoldings] = useState<AAOutput[]>([])
   const [badTickerError, setBadTickerError] = useState<string>('')
-
-    // useEffect(() => {
-    //   if (userPortfolio?.email) {
-    //     saveUserPortfolioWeightings()
-    //   }
-    //   // addNewHolding()
-    // }, [userPortfolio])
 
     const classes = useStyles();
 

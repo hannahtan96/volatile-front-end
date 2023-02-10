@@ -13,17 +13,14 @@ export interface formValues {
 const EditOneStockForm = (datum: Weighting) => {
 
   const { user } = useContext(UserContext) as UserContextType;
-  // const [ticker, setTicker] = useState<string>()
-  // const [shares, setShares] = useState<number>()
   const [display, setDisplay] = useState<boolean>(false)
 
   useEffect(() => {
-    // setDisplay(false)
     reset()
-    if (datum['01. symbol']) {
+    if (datum['symbol']) {
       setDisplay(true)
-      setTicker(datum['01. symbol'])
-      setShares(datum['11. shares'])
+      setTicker(datum['symbol'])
+      setShares(datum['shares'])
     }
 
   }, [datum])

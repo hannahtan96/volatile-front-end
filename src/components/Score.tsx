@@ -122,9 +122,9 @@ const Score = () => {
     const uD = positions.map(p => ({
       ticker: p["ticker"],
       name: weightings!
-        .filter(w => w["01. symbol"] === p["ticker"])[0]["13. name"],
+        .filter(w => w["symbol"] === p["ticker"])[0]["name"],
       share: weightings!
-        .filter(w => w["01. symbol"] === p["ticker"])[0]["12. proportion"],
+        .filter(w => w["symbol"] === p["ticker"])[0]["proportion"],
       sentiment: p["sentiment_score"]
     }))
     console.log(uD)

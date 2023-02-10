@@ -48,8 +48,12 @@ const Score = () => {
 
   const { user, userPortfolio, userPortfolioWeightings } = useContext(UserContext) as UserContextType;
 
+  const [unfilteredPositions, setUnfilteredPositions] = useState<positionData[]>([])
   const [positions, setPositions] = useState<positionData[]>([])
+
+  const [unavailableTickers, setunavailableTickers] = useState<string[]>([])
   const [weightings, setWeightings] = useState<Weighting[]>([])
+  const [multiplier, setMultiplier] = useState<number>(1)
   const [sentiment, setSentiment] = useState<number|null>()
   const [userData, setUserData] = useState<onePosition[]>([])
   const [loadingMessage, setLoadingMessage] = useState<string>('No portfolio is registered.')
@@ -76,6 +80,12 @@ const Score = () => {
   }, [userPortfolioWeightings])
 
   useEffect(() => {
+    if (weightings && weightings.length > 0 && unfilteredPositions && unfilteredPositions.length > 0) {
+      filterRelevantSentiments(unfilteredPositions)
+    }
+  }, [unfilteredPositions])
+
+  useEffect(() => {
     if (weightings && weightings.length > 0 && positions && positions.length > 0) {
       mapShareWeights()
     }
@@ -98,13 +108,28 @@ const Score = () => {
       getCurrUserPortfolioSentiments(portfolio)
       .then((response) => {
         console.log(response)
-        setPositions(response.portfolio)
+        setUnfilteredPositions(response.portfolio)
       })
       .catch((error) => {
         console.log(error)
-        setErrorMessage('There\'s been an error in in calculating your portfolio.')
+        setErrorMessage('There\'s been an eSrror in in calculating your portfolio.')
       })
     }
+  }
+
+  const filterRelevantSentiments = (portfolio: positionData[]) => {
+    let filteredPositions = portfolio
+      .filter(p => p["sentiment_score"] !== -1)
+    let positionsNoData = portfolio
+      .filter(p => p["sentiment_score"] === -1)
+      .map(p => p["ticker"])
+    let sentimentedProportion = portfolio
+      .filter(p => p["sentiment_score"] !== -1)
+      .reduce((acc, p) => { return acc + weightings!.filter(w => w["symbol"] === p["ticker"])[0]["proportion"] }, 0)
+
+    setPositions(filteredPositions)
+    setMultiplier(1/sentimentedProportion)
+    setunavailableTickers(positionsNoData)
   }
 
   let percentage_option = {
@@ -124,7 +149,7 @@ const Score = () => {
       name: weightings!
         .filter(w => w["symbol"] === p["ticker"])[0]["name"],
       share: weightings!
-        .filter(w => w["symbol"] === p["ticker"])[0]["proportion"],
+        .filter(w => w["symbol"] === p["ticker"])[0]["proportion"]*multiplier,
       sentiment: p["sentiment_score"]
     }))
     console.log(uD)
@@ -222,7 +247,10 @@ const Score = () => {
 
       { sentiment! ?
           (<div id='score-section'>
-            <AgChartsReact id="ag" options={options} />
+            <Box sx={{ display: 'flex', flexDirection: 'column', textAlign: 'center' }}>
+              <AgChartsReact id="ag" options={options} />
+              {unavailableTickers.length > 0 ? <Typography variant='subtitle2' color='gray' sx={{ textAlign: 'center', fontStyle: 'italic' }}>No news available for {unavailableTickers.join(", ")}</Typography> : ""}
+            </Box>
           </div>) :
           (<Typography variant="h1" display="block" paddingTop={5} sx={{ fontSize: 50, fontWeight: 300, color: 'gray', letterSpacing: -1 }}>
             {loadingMessage}
@@ -232,7 +260,8 @@ const Score = () => {
                 </Box>) : ""}
           </Typography>)}
 
-          {errorMessage ? <Typography variant="h1" display="block" paddingTop={5} sx={{ fontSize: 20, fontWeight: 300, color: 'black', letterSpacing: -1 }}>{errorMessage}</Typography> : ""}
+
+          {errorMessage ? <Typography variant="body2" p={1} m={'auto'} sx={{ width: '500px', border: 1, borderColor: 'red'}}>{errorMessage}</Typography> : ""}
 
           <div id='sentimented-words-section' className='p-10'>
             {clicked ? <SentimentedWordList words={sentimentedWords} /> : <div></div>}

@@ -77,6 +77,7 @@ const EditOneStockForm = (datum: Weighting) => {
                     onChange={onChange} // send value to hook form
                     onBlur={onBlur} // notify when input is touched/blur
                     value={value}
+                    inputProps={{ style: { textTransform: 'capitalize' } }}
                     // defaultValue={ticker}
                     placeholder={ticker}
                     error={!!error}
@@ -96,10 +97,12 @@ const EditOneStockForm = (datum: Weighting) => {
                   <TextField
                     id="outlined"
                     // {...field}
+                    type="number"
                     onChange={onChange} // send value to hook form
                     onBlur={onBlur} // notify when input is touched/blur
                     value={value}
                     // defaultValue={shares}
+                    InputProps={{ inputProps: { min: 0 } }}
                     error={!!error}
                     helperText={error ? error.message : null}
 

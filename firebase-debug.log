@@ -1,0 +1,29 @@
+[debug] [2023-02-10T22:08:07.636Z] ----------------------------------------------------------------------
+[debug] [2023-02-10T22:08:07.638Z] Command:       /opt/homebrew/Cellar/node/19.3.0/bin/node /opt/homebrew/bin/firebase init
+[debug] [2023-02-10T22:08:07.638Z] CLI Version:   11.21.0
+[debug] [2023-02-10T22:08:07.638Z] Platform:      darwin
+[debug] [2023-02-10T22:08:07.638Z] Node Version:  v19.3.0
+[debug] [2023-02-10T22:08:07.638Z] Time:          Fri Feb 10 2023 14:08:07 GMT-0800 (Pacific Standard Time)
+[debug] [2023-02-10T22:08:07.638Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-02-10T22:08:07.641Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-02-10T22:08:07.642Z] > authorizing via signed-in user (hannahtan96@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  /Users/hannahtan/Developer/projects/volatile/front-end-volatile/volatile
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[info] i  If you want to create a project in a Google Cloud organization or folder, please use "firebase projects:create" instead, and return to this command when you've created the project. 

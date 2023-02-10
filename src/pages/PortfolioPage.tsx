@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { AgChartsReact } from 'ag-charts-react';
-import { useContext } from 'react';
 import { UserContextType, Weighting } from "../types/user.type";
 import { UserContext } from '../context/userContext';
 import Portfolio from '../components/Portfolio';

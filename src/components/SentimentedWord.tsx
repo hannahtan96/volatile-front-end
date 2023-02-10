@@ -1,4 +1,3 @@
-import { useState, MouseEvent } from 'react'
 import { Typography } from '@mui/material'
 import './SentimentedWord.css'
 

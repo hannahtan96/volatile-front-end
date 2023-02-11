@@ -5,23 +5,15 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import UserProvider from './context/userContext';
 
-// const root = ReactDOM.createRoot(
-//   document.getElementById('root') as HTMLElement
-// );
-// root.render(
-//   <BrowserRouter>
-//     <App />
-//   </BrowserRouter>
-// );
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
   );
   root.render(
     <UserProvider>
-      {/* <React.StrictMode> */}
+      <React.StrictMode>
         <App />
-      {/* </React.StrictMode> */}
+      </React.StrictMode>
     </UserProvider>
   );
 

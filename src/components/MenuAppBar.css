@@ -2,6 +2,11 @@ a {
   text-decoration: none;
 }
 
+img {
+  height: 28px;
+  padding-right: 4px;
+}
+
 .curr-user-display {
   color: white;
 }

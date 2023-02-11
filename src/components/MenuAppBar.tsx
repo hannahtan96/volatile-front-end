@@ -11,6 +11,8 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import logo from '../assets/logo.png';
+import logo2 from '../assets/logo2.png';
 import { UserContextType } from '../types/user.type';
 import { UserContext } from '../context/userContext';
 import './MenuAppBar.css'
@@ -45,6 +47,7 @@ const ResponsiveAppBar = () => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+        <img src={logo2} alt="logo" />
           <Typography
             variant="h6"
             noWrap

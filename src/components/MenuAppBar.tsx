@@ -47,7 +47,8 @@ const ResponsiveAppBar = () => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <img src={logo2} alt="logo" />
+          <Box component="img" src={logo2} sx={{ display: { xs: 'none', md: 'flex'} }} />
+          {/* <img src={logo2} alt="logo" /> */}
           <Typography
             variant="h6"
             noWrap

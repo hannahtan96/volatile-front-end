@@ -6,7 +6,8 @@ import {
   Box,
   Button,
   Grid,
-  TextField
+  TextField,
+  Typography
 } from "@mui/material";
 import { makeStyles } from "@material-ui/core";
 import { UserContextType } from "../types/user.type";
@@ -157,7 +158,7 @@ const Portfolio = () => {
 
             <Grid item xs={12}>
               {/* <Grid>{potentialHoldings?.length > 0 ? <div>Pick Me</div> : ""}</Grid> */}
-              {badTickerError ? <p id='ticker-errors'>The following tickers are invalid: {badTickerError}</p> : <div></div>}
+              {badTickerError ? <Typography variant='subtitle2' color='gray' sx={{ textAlign: 'center', fontStyle: 'italic' }}>{badTickerError}</Typography> : <div></div>}
               <Button variant="contained" onClick={addNewHolding}>
                 NEW
               </Button>

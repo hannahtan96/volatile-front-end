@@ -2,18 +2,21 @@ import { useState, useEffect, useContext } from 'react';
 import { UserContextType, Weighting } from "../types/user.type";
 import { UserContext } from '../context/userContext';
 import { editPortfolio } from '../services/user.service';
-import { Grid, TextField, Button } from '@mui/material';
+import { Grid, TextField, Button, Typography } from '@mui/material';
 import { useForm, Controller } from "react-hook-form";
 
 export interface formValues {
   ticker: string
   shares: number
+  email?: string
+  user?: string
 }
 
 const EditOneStockForm = (datum: Weighting) => {
 
   const { user } = useContext(UserContext) as UserContextType;
   const [display, setDisplay] = useState<boolean>(false)
+  const [errorMessage, setErrorMessage] = useState<string>()
 
   useEffect(() => {
     reset()
@@ -35,14 +38,21 @@ const EditOneStockForm = (datum: Weighting) => {
     }
   });
 
-  const handleOnSumbit = (data: formValues) => {
+  const handleOnSubmit = (data: formValues) => {
+    // let allData = data
+    data["email"] = user!.email
+    data["user"] = user!.displayName
 
     editPortfolio(user!.localId!, data)
       .then((response) => {
           console.log(response)
-          reset()
-          setDisplay(false)
-          window.location.reload()
+          if (response.portfolio) {
+            reset()
+            setDisplay(false)
+            window.location.reload()
+          } else {
+            setErrorMessage(response["non-existent ticker"])
+          }
       })
       .catch((error) => {
         const resMessage =
@@ -60,7 +70,7 @@ const EditOneStockForm = (datum: Weighting) => {
   return (
     <section id='edit-form-section'>
       {display ?
-        (<form onSubmit={handleSubmit(data => handleOnSumbit(data))}>
+        (<form onSubmit={handleSubmit(data => handleOnSubmit(data))}>
 
           <Grid container wrap='nowrap' alignItems="center" spacing={2} >
 
@@ -77,7 +87,7 @@ const EditOneStockForm = (datum: Weighting) => {
                     onChange={onChange} // send value to hook form
                     onBlur={onBlur} // notify when input is touched/blur
                     value={value}
-                    inputProps={{ style: { textTransform: 'capitalize' } }}
+                    inputProps={{ style: { textTransform: 'uppercase' } }}
                     // defaultValue={ticker}
                     placeholder={ticker}
                     error={!!error}
@@ -117,6 +127,9 @@ const EditOneStockForm = (datum: Weighting) => {
             </Grid>
 
           </Grid>
+
+          {errorMessage ? <Typography variant='subtitle2' paddingTop={2} color='gray' sx={{ textAlign: 'center', fontStyle: 'italic' }}>No stock found with {errorMessage} ticker.</Typography> : "" }
+
 
         </form>)
       : <div></div>}

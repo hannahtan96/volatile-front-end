@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { Button, TextField, makeStyles } from '@material-ui/core';
 import { registerNewUser } from '../services/auth.service'
 import './Register.css'
+import { useNavigate } from 'react-router-dom';
 
 
 interface signUpCredentials {
@@ -46,6 +47,7 @@ const Register = () => {
   })
 
   const classes = useStyles();
+  const navigate = useNavigate()
 
   const { handleSubmit, control, reset } = useForm<signUpCredentials>({
     resolver: yupResolver(validationSchema)
@@ -58,6 +60,7 @@ const Register = () => {
         console.log(response.data)
         setMessage(response.data.message)
         reset()
+        navigate('/login')
       })
       .catch((error) => {
         const resMessage =
@@ -155,6 +158,7 @@ const Register = () => {
               render={({ field: { onChange, value }, fieldState: { error } }) => (
                 <TextField
                   label="Password"
+                  type="password"
                   variant="outlined"
                   value={value}
                   onChange={onChange}

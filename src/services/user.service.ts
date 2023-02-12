@@ -29,7 +29,7 @@ export const editPortfolio = ( localId: string, data: formValues ) => {
   }, { headers: authHeader() })
   .then((response) => {
     console.log(response)
-    if ((response.data.portfolio.length || 0) > 0) {
+    if (response.data.portfolio) {
       localStorage.setItem('userPortfolio', JSON.stringify(response.data))
     }
     return response.data

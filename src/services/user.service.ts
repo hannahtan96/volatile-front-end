@@ -30,6 +30,7 @@ export const editPortfolio = ( localId: string, data: formValues ) => {
   .then((response) => {
     console.log(response)
     if (response && response.data.portfolio) {
+      console.log(33)
       localStorage.setItem('userPortfolio', JSON.stringify(response.data))
     }
     return response.data

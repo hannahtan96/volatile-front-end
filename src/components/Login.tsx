@@ -118,7 +118,7 @@ const Login = () => {
               rules={{ required: 'Password required' }}
             />
 
-            {errorMessage ? <ErrorMessage {...{error: 'Incorrect email or password'}} /> : ""}
+            {errorMessage ? <ErrorMessage error='Incorrect email or password' /> : ""}
             <Button type='submit' variant="contained" color="primary">Login</Button>
           </form>
         </div>

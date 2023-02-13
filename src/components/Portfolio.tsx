@@ -157,8 +157,8 @@ const Portfolio = () => {
             ))}
 
             <Grid item xs={12}>
-              {/* <Grid>{potentialHoldings?.length > 0 ? <div>Pick Me</div> : ""}</Grid> */}
-              {badTickerError ? <ErrorMessage {...{error: badTickerError}} /> : ""}
+
+              {badTickerError ? <ErrorMessage error={badTickerError} /> : ""}
               <Button variant="contained" onClick={addNewHolding}>
                 NEW
               </Button>

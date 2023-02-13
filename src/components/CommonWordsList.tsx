@@ -17,7 +17,6 @@ const CommonWordsList = (props: Word) => {
 
 
   useEffect(() => {
-    console.log(props)
     const keyArray = Object.entries(props)
       .filter((word) => {return (bannedWords.indexOf(word[0]) === -1 ? true : false)})
       // .map(([o_key, o_val]) => [o_key.replace(/[^\w\s]/gi, ""), o_val])

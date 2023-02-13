@@ -1,10 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
 import { UserContextType, Weighting } from "../types/user.type";
 import { UserContext } from '../context/userContext';
-import { editPortfolio } from '../services/user.service';
 import { Grid, TextField, Button } from '@mui/material';
 import { useForm, Controller } from "react-hook-form";
-import ErrorMessage from './ErrorMessage';
 
 export interface formValues {
   ticker: string
@@ -13,11 +11,17 @@ export interface formValues {
   user?: string
 }
 
-const EditOneStockForm = (datum: Weighting) => {
+interface EditOneStockFormProps {
+  callback: Function
+  datum: Weighting
+}
+
+const EditOneStockForm = (props: EditOneStockFormProps) => {
+
+  const { callback, datum } = props
 
   const { user } = useContext(UserContext) as UserContextType;
   const [display, setDisplay] = useState<boolean>(false)
-  const [errorMessage, setErrorMessage] = useState<string>()
 
   useEffect(() => {
     reset()
@@ -40,33 +44,16 @@ const EditOneStockForm = (datum: Weighting) => {
   });
 
   const handleOnSubmit = (data: formValues) => {
-    // let allData = data
-    data["email"] = user!.email
-    data["user"] = user!.displayName
+    let submitData = {
+      "user": user?.displayName!,
+      "email": user?.email!,
+      "ticker": data.ticker,
+      "shares": data.shares
+    }
 
-    editPortfolio(user!.localId!, data)
-      .then((response) => {
-          console.log(response)
-          if (response.portfolio) {
-            reset()
-            setDisplay(false)
-            window.location.reload()
-          } else {
-            setErrorMessage(`Invalid ticker: ${response["non-existent ticker"]}`)
-          }
-      })
-      .catch((error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-
-        console.log(resMessage)
-      })
-  };
-
+    callback(submitData)
+    reset()
+  }
 
   return (
     <section id='edit-form-section'>
@@ -127,9 +114,6 @@ const EditOneStockForm = (datum: Weighting) => {
             </Grid>
 
           </Grid>
-
-          {errorMessage ? <ErrorMessage {...{error: errorMessage}} /> : "" }
-
 
         </form>)
       : <div></div>}

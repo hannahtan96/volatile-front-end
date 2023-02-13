@@ -262,7 +262,7 @@ const Score = () => {
           </Typography>)}
 
 
-          {errorMessage ? <ErrorMessage {...{error: errorMessage}} /> : ""}
+          {errorMessage ? <ErrorMessage error={errorMessage} /> : ""}
 
           <div id='sentimented-words-section' className='p-10'>
             {clicked ? <SentimentedWordList words={sentimentedWords} /> : ""}

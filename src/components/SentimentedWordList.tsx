@@ -104,12 +104,12 @@ const SentimentedWordList = ( props: sWLProps) => {
       </Box>
       <TabPanel value={value} index={0} >
         <Box sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row', gap: '3px', overflow: 'visible' }}>
-          {positiveComponents}
+          {positiveComponents.slice(0,15)}
         </Box>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row', gap: '3px', overflow: 'visible' }}>
-          {negativeComponents}
+          {negativeComponents.slice(0,15)}
         </Box>
       </TabPanel>
     </Box>

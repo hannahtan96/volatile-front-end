@@ -108,7 +108,7 @@ const Score = () => {
 
   const findSentiments = (portfolio: Holdings[]) => {
     console.log(portfolio)
-    if (portfolio.length > 1) {
+    if (portfolio.length > 0) {
       getCurrUserPortfolioSentiments(portfolio)
       .then((response) => {
         console.log(response)

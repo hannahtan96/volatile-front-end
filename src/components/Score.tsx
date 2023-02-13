@@ -10,6 +10,7 @@ import { getCurrUserPortfolioSentiments } from '../services/user.service';
 import { Holdings } from './Portfolio';
 import { Box, Typography } from '@mui/material';
 import { CircularProgress } from '@material-ui/core';
+import ErrorMessage from './ErrorMessage';
 
 interface headline {
   confidence: string,
@@ -249,7 +250,7 @@ const Score = () => {
           (<div id='score-section'>
             <Box sx={{ display: 'flex', flexDirection: 'column', textAlign: 'center' }}>
               <AgChartsReact id="ag" options={options} />
-              {unavailableTickers.length > 0 ? <Typography variant='subtitle2' color='gray' sx={{ textAlign: 'center', fontStyle: 'italic' }}>No news available for {unavailableTickers.join(", ")}</Typography> : ""}
+              {unavailableTickers.length > 0 ? <ErrorMessage {...{error: `No news available for ${unavailableTickers.join(", ")}`}} /> : ""}
             </Box>
           </div>) :
           (<Typography variant="h1" display="block" paddingTop={5} sx={{ fontSize: 50, fontWeight: 300, color: 'gray', letterSpacing: -1 }}>
@@ -261,13 +262,13 @@ const Score = () => {
           </Typography>)}
 
 
-          {errorMessage ? <Typography variant="body2" p={1} m={'auto'} sx={{ width: '500px', border: 1, borderColor: 'red'}}>{errorMessage}</Typography> : ""}
+          {errorMessage ? <ErrorMessage {...{error: errorMessage}} /> : ""}
 
           <div id='sentimented-words-section' className='p-10'>
-            {clicked ? <SentimentedWordList words={sentimentedWords} /> : <div></div>}
+            {clicked ? <SentimentedWordList words={sentimentedWords} /> : ""}
           </div>
           <div id='common-words-section' className='p-10'>
-            {clicked ? <CommonWordsList {...commonWords} /> : <div></div>}
+            {clicked ? <CommonWordsList {...commonWords} /> : ""}
           </div>
         </div>
 

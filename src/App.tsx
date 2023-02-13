@@ -13,12 +13,6 @@ import PortfolioPage from './pages/PortfolioPage';
 
 function App() {
 
-  // const [user, setUser] = useState<User|null>(null);
-
-  // useEffect(() => {
-  //   setUser(getCurrentUser())
-  // }, [])
-
   return (
     <div className="App">
       <div className='contain mt-3'>

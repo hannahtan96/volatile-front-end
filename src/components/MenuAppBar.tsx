@@ -11,7 +11,6 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import logo from '../assets/logo.png';
 import logo2 from '../assets/logo2.png';
 import { UserContextType } from '../types/user.type';
 import { UserContext } from '../context/userContext';
@@ -24,7 +23,6 @@ const ResponsiveAppBar = () => {
 
   const { user } = useContext(UserContext) as UserContextType;
 
-  // const [pages, setPages] = useState<string[]>()
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
@@ -48,7 +46,6 @@ const ResponsiveAppBar = () => {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box component="img" src={logo2} sx={{ display: { xs: 'none', md: 'flex'} }} />
-          {/* <img src={logo2} alt="logo" /> */}
           <Typography
             variant="h6"
             noWrap

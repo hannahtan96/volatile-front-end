@@ -6,13 +6,13 @@ import {
   Box,
   Button,
   Grid,
-  TextField,
-  Typography
+  TextField
 } from "@mui/material";
 import { makeStyles } from "@material-ui/core";
 import { UserContextType } from "../types/user.type";
 import { UserContext } from '../context/userContext';
 import './Portfolio.css'
+import ErrorMessage from "./ErrorMessage";
 
 
 export interface Holdings {
@@ -69,7 +69,7 @@ const Portfolio = () => {
         .then((response) => {
           console.log(response)
           if (response["non-existent tickers"]) {
-            setBadTickerError(response["non-existent tickers"])
+            setBadTickerError(`Invalid tickers: ${response["non-existent tickers"]}`)
           } else {
             console.log(response.data)
             reset()
@@ -158,7 +158,7 @@ const Portfolio = () => {
 
             <Grid item xs={12}>
               {/* <Grid>{potentialHoldings?.length > 0 ? <div>Pick Me</div> : ""}</Grid> */}
-              {badTickerError ? <Typography variant='subtitle2' color='gray' sx={{ textAlign: 'center', fontStyle: 'italic' }}>{badTickerError}</Typography> : <div></div>}
+              {badTickerError ? <ErrorMessage {...{error: badTickerError}} /> : ""}
               <Button variant="contained" onClick={addNewHolding}>
                 NEW
               </Button>

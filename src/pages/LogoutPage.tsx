@@ -1,4 +1,3 @@
-import React from 'react';
 import { useEffect } from 'react';
 import { logout } from '../services/auth.service';
 import { Box } from '@mui/material';

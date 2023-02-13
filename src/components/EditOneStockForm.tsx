@@ -2,8 +2,9 @@ import { useState, useEffect, useContext } from 'react';
 import { UserContextType, Weighting } from "../types/user.type";
 import { UserContext } from '../context/userContext';
 import { editPortfolio } from '../services/user.service';
-import { Grid, TextField, Button, Typography } from '@mui/material';
+import { Grid, TextField, Button } from '@mui/material';
 import { useForm, Controller } from "react-hook-form";
+import ErrorMessage from './ErrorMessage';
 
 export interface formValues {
   ticker: string
@@ -51,7 +52,7 @@ const EditOneStockForm = (datum: Weighting) => {
             setDisplay(false)
             window.location.reload()
           } else {
-            setErrorMessage(response["non-existent ticker"])
+            setErrorMessage(`Invalid ticker: ${response["non-existent ticker"]}`)
           }
       })
       .catch((error) => {
@@ -121,14 +122,13 @@ const EditOneStockForm = (datum: Weighting) => {
               />
             </Grid>
 
-            {/* {formState.errors?.content ? true : false} */}
             <Grid item xs={12}>
               <Button type="submit" variant='contained'>UPDATE</Button>
             </Grid>
 
           </Grid>
 
-          {errorMessage ? <Typography variant='subtitle2' paddingTop={2} color='gray' sx={{ textAlign: 'center', fontStyle: 'italic' }}>No stock found with {errorMessage} ticker.</Typography> : "" }
+          {errorMessage ? <ErrorMessage {...{error: errorMessage}} /> : "" }
 
 
         </form>)

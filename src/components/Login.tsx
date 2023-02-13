@@ -8,6 +8,7 @@ import { login } from '../services/auth.service'
 import { UserContextType } from "../types/user.type";
 import { UserContext } from '../context/userContext';
 import './Login.css';
+import ErrorMessage from './ErrorMessage';
 
 interface loginCredentials {
   email: string
@@ -117,7 +118,7 @@ const Login = () => {
               rules={{ required: 'Password required' }}
             />
 
-            {errorMessage ? <p id='login-error-message'>Incorrect email or password</p> : <div></div>}
+            {errorMessage ? <ErrorMessage {...{error: 'Incorrect email or password'}} /> : ""}
             <Button type='submit' variant="contained" color="primary">Login</Button>
           </form>
         </div>

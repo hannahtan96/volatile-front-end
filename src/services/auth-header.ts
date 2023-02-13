@@ -9,9 +9,9 @@ export default function authHeader() {
 
   if (user && user.idToken) {
     let token = user.idToken;
-    return { 'Authorization': token!, 'Access-Control-Allow-Origin': '*' }
+    return { 'Authorization': token!, 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': '*', 'Access-Control-Allow-Headers': '*'  }
   } else {
-    return { 'Authorization': '', 'Access-Control-Allow-Origin': '*' }
+    return { 'Authorization': '', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': '*', 'Access-Control-Allow-Headers': '*'  }
   }
 
 }

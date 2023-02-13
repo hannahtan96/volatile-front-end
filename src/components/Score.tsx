@@ -82,21 +82,18 @@ const Score = () => {
 
   useEffect(() => {
     if (unfilteredPositions && unfilteredPositions.length > 0) {
-      console.log(85)
       filterRelevantSentiments(unfilteredPositions)
     }
   }, [unfilteredPositions])
 
   useEffect(() => {
     if (positions && positions.length > 0) {
-      console.log(92)
       mapShareWeights()
     }
   }, [weightings, positions])
 
   useEffect(() => {
     if (userData.length > 0) {
-      console.log(99)
       calculateSentiment()
     }
   }, [userData])
@@ -107,7 +104,6 @@ const Score = () => {
   }, [selectedPosition])
 
   const findSentiments = (portfolio: Holdings[]) => {
-    console.log(portfolio)
     if (portfolio.length > 0) {
       getCurrUserPortfolioSentiments(portfolio)
       .then((response) => {
@@ -122,7 +118,6 @@ const Score = () => {
   }
 
   const filterRelevantSentiments = (portfolio: positionData[]) => {
-    console.log(portfolio)
     let filteredPositions = portfolio
       .filter(p => p["sentiment_score"] !== -1)
     let positionsNoData = portfolio
@@ -169,7 +164,7 @@ const Score = () => {
       weighted_total += userData[i].share * userData[i].sentiment;
       total_weight += userData[i].share
     }
-    console.log(weighted_total / total_weight)
+
     setSentiment(Math.round(1000 * (weighted_total / total_weight))/10);
   }
 

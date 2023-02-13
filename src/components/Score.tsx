@@ -55,7 +55,7 @@ const Score = () => {
   const [unavailableTickers, setunavailableTickers] = useState<string[]>([])
   const [weightings, setWeightings] = useState<Weighting[]>([])
   const [multiplier, setMultiplier] = useState<number>(1)
-  const [sentiment, setSentiment] = useState<number|null>()
+  const [sentiment, setSentiment] = useState<number>()
   const [userData, setUserData] = useState<onePosition[]>([])
   const [loadingMessage, setLoadingMessage] = useState<string>('No portfolio is registered.')
   const [errorMessage, setErrorMessage] = useState<string>()
@@ -81,19 +81,22 @@ const Score = () => {
   }, [userPortfolioWeightings])
 
   useEffect(() => {
-    if (weightings && weightings.length > 0 && unfilteredPositions && unfilteredPositions.length > 0) {
+    if (unfilteredPositions && unfilteredPositions.length > 0) {
+      console.log(85)
       filterRelevantSentiments(unfilteredPositions)
     }
   }, [unfilteredPositions])
 
   useEffect(() => {
-    if (weightings && weightings.length > 0 && positions && positions.length > 0) {
+    if (positions && positions.length > 0) {
+      console.log(92)
       mapShareWeights()
     }
   }, [weightings, positions])
 
   useEffect(() => {
-    if (weightings.length > 0 && userData.length > 0) {
+    if (userData.length > 0) {
+      console.log(99)
       calculateSentiment()
     }
   }, [userData])
@@ -113,12 +116,13 @@ const Score = () => {
       })
       .catch((error) => {
         console.log(error)
-        setErrorMessage('There\'s been an eSrror in in calculating your portfolio.')
+        setErrorMessage('There\'s been an error in in calculating your portfolio.')
       })
     }
   }
 
   const filterRelevantSentiments = (portfolio: positionData[]) => {
+    console.log(portfolio)
     let filteredPositions = portfolio
       .filter(p => p["sentiment_score"] !== -1)
     let positionsNoData = portfolio
@@ -128,6 +132,7 @@ const Score = () => {
       .filter(p => p["sentiment_score"] !== -1)
       .reduce((acc, p) => { return acc + weightings!.filter(w => w["symbol"] === p["ticker"])[0]["proportion"] }, 0)
 
+    console.log(filteredPositions)
     setPositions(filteredPositions)
     setMultiplier(1/sentimentedProportion)
     setunavailableTickers(positionsNoData)
@@ -246,7 +251,7 @@ const Score = () => {
     <section id='score-page'>
       <div id='score-flex-container'>
 
-      { sentiment! ?
+      { sentiment ?
           (<div id='score-section'>
             <Box sx={{ display: 'flex', flexDirection: 'column', textAlign: 'center' }}>
               <AgChartsReact id="ag" options={options} />

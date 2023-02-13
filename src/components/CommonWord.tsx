@@ -1,5 +1,5 @@
 import { useState, MouseEvent } from 'react'
-import { Popover, Typography } from '@mui/material'
+import { Box, Popover, Typography } from '@mui/material'
 import './CommonWord.css'
 
 interface CommonWordProps {
@@ -24,7 +24,7 @@ const CommonWord = (props: CommonWordProps) => {
   const backgroundColor = props.color
 
   return (
-    <div>
+    <Box>
       <Typography
         aria-owns={open ? 'mouse-over-popover' : undefined}
         aria-haspopup="true"
@@ -54,7 +54,7 @@ const CommonWord = (props: CommonWordProps) => {
       >
         <Typography sx={{ p: 1, fontSize: 10 }}>{props.frequency}</Typography>
       </Popover>
-    </div>
+    </Box>
   )
 
 }

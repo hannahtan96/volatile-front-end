@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 import './SentimentedWord.css'
 
 interface SentimentedWordProps {
@@ -8,11 +8,11 @@ interface SentimentedWordProps {
 const SentimentedWord = (props: SentimentedWordProps) => {
 
   return (
-      <Typography component={'span'}
-        sx={{ backgroundColor: 'lightgray', fontSize: 16, borderRadius: 1, padding: 0.3 }}
-      >
-        {props.word}
-      </Typography>
+    <Typography component={'span'}
+      sx={{ backgroundColor: 'lightgray', fontSize: 16, borderRadius: 1, padding: 0.3 }}
+    >
+      {props.word}
+    </Typography>
   )
 
 }

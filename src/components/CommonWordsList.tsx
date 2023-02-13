@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import * as d3 from "d3";
 import CommonWord from './CommonWord';
 import './CommonWordsList.css'
-import { Box, Tab } from '@mui/material';
+import { Box, Grid, Tab } from '@mui/material';
 
 interface Word {
   [key: string]: number;
@@ -13,18 +13,23 @@ const CommonWordsList = (props: Word) => {
   const [q1, setQ1] = useState<number>()
   const [q2, setQ2] = useState<number>()
   const [q3, setQ3] = useState<number>()
+  // const [filteredWords, setFilteredWords] =
   const [keyArray, setKeyArray] = useState<[string, number][]>([])
 
-
   useEffect(() => {
+
     const keyArray = Object.entries(props)
       .filter((word) => {return (bannedWords.indexOf(word[0]) === -1 ? true : false)})
-      // .map(([o_key, o_val]) => [o_key.replace(/[^\w\s]/gi, ""), o_val])
-    const freqArray = keyArray.map((item) => item[1]);
+      .filter((item) => item[1] !== 1)
+
+    const freqArray = keyArray
+      .map((item) => item[1]);
+
     setQ1(d3.quantile(freqArray, 0.25) || 0)
     setQ2(d3.quantile(freqArray, 0.50) || 0)
     setQ3(d3.quantile(freqArray, 0.75) || 0)
     setKeyArray(keyArray)
+
   }, [props])
 
   const color = (freq: number) => {
@@ -67,15 +72,15 @@ const CommonWordsList = (props: Word) => {
 
 
   return (
-    <div>
+    <Box>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tab label="KEYWORDS" />
       </Box>
-      <ul id='common-words-block'>{commonWordsComponent}</ul>
-    </div>
+      <Box p={3} sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row', gap: '3px' }}>
+        {commonWordsComponent}
+      </Box>
+    </Box>
   );
-
-
 }
 
 export default CommonWordsList;

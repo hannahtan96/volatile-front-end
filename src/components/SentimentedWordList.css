@@ -1,7 +1,7 @@
 .sentimented-words-block {
   display: flex;
-  flex-wrap: wrap;
-  overflow: hidden;
+  /* flex-wrap: wrap; */
+  /* overflow: hidden; */
   gap: 6px;
   margin: 0;
 }

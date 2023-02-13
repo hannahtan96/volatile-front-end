@@ -1,7 +1,6 @@
 import { useState, SyntheticEvent, useEffect } from 'react';
 import { sentiment } from './Score'
-import { Box, Tabs, Tab } from '@mui/material'
-import { Typography } from '@material-ui/core';
+import { Box, Grid, Tabs, Tab, Typography } from '@mui/material';
 import SentimentedWord from './SentimentedWord';
 import './SentimentedWordList.css'
 
@@ -29,7 +28,7 @@ const TabPanel = (props: TabPanelProps) => {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ p: 3, display: 'flex', overflow: 'visible' }}>
           <Typography component='span'>{children}</Typography>
         </Box>
       )}
@@ -96,7 +95,7 @@ const SentimentedWordList = ( props: sWLProps) => {
   };
 
   return (
-    <Box sx={{ width: '100% '}}>
+    <Box sx={{ height: 'auto', width: '100%'}}>
       <Box sx={{ width: '100%', borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="Positive" {...a11yProps(0)} />
@@ -104,14 +103,14 @@ const SentimentedWordList = ( props: sWLProps) => {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0} >
-        <div className='sentimented-words-block'>
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row', gap: '3px', overflow: 'visible' }}>
           {positiveComponents}
-        </div>
+        </Box>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <div className='sentimented-words-block'>
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row', gap: '3px', overflow: 'visible' }}>
           {negativeComponents}
-        </div>
+        </Box>
       </TabPanel>
     </Box>
   );

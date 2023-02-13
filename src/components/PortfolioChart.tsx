@@ -17,7 +17,7 @@ const PortfolioChart = () => {
   const [currWeightings, setCurrWeightings] = useState<Weighting[]>()
   const [display, setDisplay] = useState<boolean>(false)
   const [tickerToEdit, setTickerToEdit] = useState<Weighting|null>()
-  const [errorMessage, setErrorMessage] = useState<string>()
+  const [errorMessage, setErrorMessage] = useState<string|null>()
 
   useEffect(() => {
     if (user?.displayName) {
@@ -36,6 +36,7 @@ const PortfolioChart = () => {
       setCurrWeightings(userPortfolioWeightings?.weightings)
       setDisplay(true)
       setTickerToEdit(null)
+      setErrorMessage(null)
     }
   }, [userPortfolioWeightings])
 
@@ -88,6 +89,8 @@ const PortfolioChart = () => {
           console.log(response)
           if (response.portfolio) {
             getUserPortfolioWeightings()
+            setTickerToEdit(null)
+            setErrorMessage(null)
           } else {
             setErrorMessage(`Invalid ticker: ${response["non-existent ticker"]}`)
           }
@@ -102,7 +105,6 @@ const PortfolioChart = () => {
 
         console.log(resMessage)
       })
-      .finally(() => setTickerToEdit(null))
   }
 
   let percentage_option = {

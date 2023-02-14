@@ -247,9 +247,23 @@ const Score = () => {
 
       { sentiment ?
           (<div id='score-section'>
-            <Box sx={{ display: 'flex', flexDirection: 'column', textAlign: 'center' }}>
+            <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', textAlign: 'center' }}>
               <AgChartsReact id="ag" options={options} />
               {unavailableTickers.length > 0 ? <ErrorMessage {...{error: `No news available for ${unavailableTickers.join(", ")}`}} /> : ""}
+              <Box paddingLeft={3} paddingRight={3} sx={{ width: '95%', display: 'flex', flexDirection: 'column' }} >
+                <Typography variant='subtitle2' sx={{ color: 'black', fontWeight: '600', fontSize: 10, textDecoration: 'underline', textAlign: 'left' }}>Footnotes:</Typography>
+                <Typography variant='subtitle2' sx={{ color: 'gray', fontSize: 9, fontStyle: 'italic', textAlign: 'justify', lineHeight: 1.2 }}>
+                  (1) Individual sentiments are calculated as the average sentiment of the top ten article headlines (if available) as determined by the Meaning Cloud API with confidence scores of 85%+. Sentiments are originally provided as qualitiative measures (P+, P, NEU, N, N+),
+                  which are subsequently translated into quantitative figures (1.00, 0.75, 0.50, 0.25, 0.00), respectively. The aggregate sentiment {sentiment}% is the weighted average of the individual sentimented as based the current price and number of shares of each position.
+                  Positions with no relevant headlines, and therefore no sentiment score, are excluded from the calculation of the aggregate sentiment score.
+                </Typography>
+                <Typography variant='subtitle2' sx={{ color: 'gray', fontSize: 9, fontStyle: 'italic', textAlign: 'justify', lineHeight: 1.2 }}>
+                  (2) Sentimented words are defined as those strictly categorized as "P" (positive) or "N" (negative) by the Meaning Cloud API. These words in aggregate contribute the determination of the sentiment of each New York Times headline.
+                </Typography>
+                <Typography variant='subtitle2' sx={{ color: 'gray', fontSize: 9, fontStyle: 'italic', textAlign: 'justify', lineHeight: 1.2 }}>
+                  (3) Keyword frequencies are calculated as the number of occurrences in the headline and lead paragraph of relevant New York Times articles.
+                </Typography>
+              </Box>
             </Box>
           </div>) :
           (<Typography variant="h1" display="block" paddingTop={5} sx={{ fontSize: 50, fontWeight: 300, color: 'gray', letterSpacing: -1 }}>

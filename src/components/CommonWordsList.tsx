@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import * as d3 from "d3";
 import CommonWord from './CommonWord';
 import './CommonWordsList.css'
-import { Box, Tab } from '@mui/material';
+import { Box, Tab, Typography } from '@mui/material';
+import { fontSize } from '@mui/system';
 
 interface Word {
   [key: string]: number;

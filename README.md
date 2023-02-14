@@ -1,10 +1,29 @@
-# Getting Started with Create React App
+# Volatile: volatile-front-end
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Volatile is a full-stack application and analytical tool that merges quantitative and qualitative analysis to derive a sentiment score of your overall stock portfolio. This repository holds the frontend code for the project, which must be deployed alongside its associated [back-end repository](https://github.com/hannahtan96/volatile-back-end).
+
+## Usage
+
+After pulling the repo to your local machine, install the relevant dependencies via npm or yarn.
+
+```javascript
+yarn install
+```
+
+## Deployment
+
+To connect to a different backend URL, edit the API_URL shown below:
+
+```javascript
+export const API_URL = '***YOUR_BACKEND_URL***/api'
+```
+
+
+This front-end repository can be hosted via Firebase Hosting. To do so, first run a yarn run build, which will compile the TypeScript code into Javascript in a ***static*** folder. Copy all of the files from the ***build*** folder into the ***public*** folder.
 
 ## Available Scripts
 
-In the project directory, you can run:
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). In the project directory, you can run:
 
 ### `yarn start`
 

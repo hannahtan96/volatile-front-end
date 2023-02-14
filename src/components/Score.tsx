@@ -107,7 +107,6 @@ const Score = () => {
     if (portfolio.length > 0) {
       getCurrUserPortfolioSentiments(portfolio)
       .then((response) => {
-        console.log(response)
         setUnfilteredPositions(response.portfolio)
       })
       .catch((error) => {
@@ -153,7 +152,7 @@ const Score = () => {
         .filter(w => w["symbol"] === p["ticker"])[0]["proportion"]*multiplier,
       sentiment: p["sentiment_score"]
     }))
-    console.log(uD)
+
     setUserData(uD)
   }
 

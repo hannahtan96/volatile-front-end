@@ -57,7 +57,6 @@ const Register = () => {
 
     registerNewUser(firstName, lastName, username, email, password)
       .then((response) => {
-        console.log(response.data)
         setMessage(response.data.message)
         reset()
         navigate('/login')

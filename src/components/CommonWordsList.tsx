@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import * as d3 from "d3";
 import CommonWord from './CommonWord';
 import './CommonWordsList.css'
-import { Box, Grid, Tab } from '@mui/material';
+import { Box, Tab } from '@mui/material';
 
 interface Word {
   [key: string]: number;
@@ -13,7 +13,6 @@ const CommonWordsList = (props: Word) => {
   const [q1, setQ1] = useState<number>()
   const [q2, setQ2] = useState<number>()
   const [q3, setQ3] = useState<number>()
-  // const [filteredWords, setFilteredWords] =
   const [keyArray, setKeyArray] = useState<[string, number][]>([])
 
   useEffect(() => {
@@ -33,7 +32,6 @@ const CommonWordsList = (props: Word) => {
   }, [props])
 
   const color = (freq: number) => {
-    console.log(q1, q2, q3)
     if (freq <= q1!) {
       return '#caf0f8'
     } else if (freq <= q2!) {
@@ -47,9 +45,10 @@ const CommonWordsList = (props: Word) => {
 
   const bannedWords = ['THE','A','AN','HE','HIM','HIS','I','MY','ME','SHE','HER','HERS','WE','OUR','THEY','US',
   'THEM','THEIRS','THEIR','EVERY','EVER','ANY','ANYONE','ANYWHERE','HAS','HAD','HAVE','TOO','IS', 'IN','OFF',
-  'WAS','WILL','BE','SO','AND','OUR','COULD','SHOULD','WOULD','BY','FROM','FOR','NOT','ARE','THIS','THAT','AT',
+  'WAS','WERE','WILL','BE','SO','AND','OUR','COULD','SHOULD','WOULD','BY','FROM','FOR','NOT','ARE','THIS','THAT',
   'IT','ITS','TO','WITH','ARE','WHO','WHERE','WHY','WHILE','WHAT','WHICH','WHEN','HOW','AS','ON','ABOUT','IF',
-  'OF','HOWEVER','BUT','ONE','TWO','THREE','DOES','DO','BEEN','SUCH','MUCH','MANY']
+  'OF','HOWEVER','BUT','ONE','TWO','THREE','DOES','DO','BEEN','SUCH','MUCH','MANY','MOST','YOU','YOUR','YOURS',
+  'SOME','OVER','AT','MORE','SAID']
   let key_id = 0
 
   const commonWordsComponent = keyArray

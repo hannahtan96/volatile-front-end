@@ -54,7 +54,6 @@ const Login = () => {
 
     login(email, password)
       .then((response:any) => {
-        console.log(response)
         if (response.displayName) {
           saveUser(response);
           navigate('/portfolio')

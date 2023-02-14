@@ -67,7 +67,6 @@ const Portfolio = () => {
 
       logPortfolio(name, email, localId, portfolio)
         .then((response) => {
-          console.log(response)
           if (response["non-existent tickers"]) {
             setBadTickerError(`Invalid tickers: ${response["non-existent tickers"]}`)
           } else {

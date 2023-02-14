@@ -12,7 +12,6 @@ export const logPortfolio = ( user: string, email: string, localId: string, port
     portfolio
   }, { headers: authHeader() })
   .then((response) => {
-    console.log(response)
     if (response && response.data.portfolio) {
       localStorage.setItem('userPortfolio', JSON.stringify(response.data))
     }
@@ -28,9 +27,7 @@ export const editPortfolio = ( localId: string, data: formValues ) => {
     data
   }, { headers: authHeader() })
   .then((response) => {
-    console.log(response)
     if (response && response.data.portfolio) {
-      console.log(33)
       localStorage.setItem('userPortfolio', JSON.stringify(response.data))
     }
     return response.data
@@ -45,7 +42,6 @@ export const getCurrUserPortfolio = (localId: string) => {
   return axios.get(API_URL + '/portfolio/' + localId, { headers: authHeader() })
     .then((response) => {
       if (response.data.portfolio) {
-        console.log(response)
         localStorage.setItem('userPortfolio', JSON.stringify(response.data))
       }
       return response.data
@@ -60,7 +56,6 @@ export const getCurrUserPortfolioWeightings = (localId: string) => {
   return axios.get(API_URL + '/portfolio/' + localId + '/tickers', { headers: authHeader() })
     .then((response) => {
       if (response.data) {
-        console.log(response)
         if (response.data.weightings) {
           localStorage.setItem('userPortfolioWeightings', JSON.stringify(response.data))
         }
@@ -78,7 +73,7 @@ export const getCurrUserPortfolioSentiments = (portfolio : Holdings[]) => {
     portfolio
     }, { headers: authHeader() })
     .then((response) => {
-      console.log(response)
+
       if (response.data) {
         return response.data
       }

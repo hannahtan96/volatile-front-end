@@ -7,10 +7,10 @@ import NotLoggedInLinks from '../components/NotLoggedInLinks';
 
 const ScorePage = () => {
 
-  const { user, userPortfolio } = useContext(UserContext) as UserContextType;
+  const { user } = useContext(UserContext) as UserContextType;
 
   return (
-    (userPortfolio?.portfolio ? <Score /> : <NotLoggedInLinks />)
+    (user?.displayName ? <Score /> : <NotLoggedInLinks />)
   )
 
 }

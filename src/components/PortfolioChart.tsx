@@ -8,8 +8,6 @@ import EditOneStockForm, { formValues } from '../components/EditOneStockForm';
 import { getCurrUserPortfolio, getCurrUserPortfolioWeightings } from '../services/user.service';
 import { Typography, Button, Box } from '@mui/material';
 import ErrorMessage from '../components/ErrorMessage';
-import { get } from 'react-hook-form';
-
 
 const PortfolioChart = () => {
 
@@ -45,7 +43,6 @@ const PortfolioChart = () => {
   const getUserPortfolio = () => {
     getCurrUserPortfolio(user!.localId!)
       .then((response) => {
-        console.log(response)
         saveUserPortfolio(response)
       })
       .catch((error) => {
@@ -56,7 +53,6 @@ const PortfolioChart = () => {
   const getUserPortfolioWeightings = () => {
     getCurrUserPortfolioWeightings(user!.localId!)
       .then((response) => {
-        console.log(response)
         if (response.weightings) {
           saveUserPortfolioWeightings(response)
         } else if (response.error) {
@@ -87,7 +83,6 @@ const PortfolioChart = () => {
 
     editPortfolio(user!.localId!, data)
       .then((response) => {
-          console.log(response)
           if (response.portfolio) {
             getUserPortfolio()
             getUserPortfolioWeightings()

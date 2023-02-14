@@ -245,6 +245,8 @@ const PortfolioChart = () => {
 
       :  <div></div>}
 
+      {errorMessage ? <ErrorMessage error={errorMessage} /> : ""}
+
       <Button type="submit" variant="outlined" onClick={edit} >ADD ONE</Button>
 
       <div id='new-portfolio-form' className='p-20'>
@@ -252,7 +254,6 @@ const PortfolioChart = () => {
         <Portfolio />
       </div>
 
-      {errorMessage ? <ErrorMessage error={errorMessage} /> : ""}
     </div>
   )
 

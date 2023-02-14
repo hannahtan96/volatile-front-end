@@ -45,8 +45,6 @@ const a11yProps = (index: number) => {
 
 const SentimentedWordList = ( props: sWLProps) => {
 
-  console.log(props)
-
   const [value, setValue] = useState<number>(0);
   const [positiveList, setPositiveList] = useState<string[]>([])
   const [negativeList, setNegativeList] = useState<string[]>([])

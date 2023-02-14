@@ -6,7 +6,7 @@ interface ErrorMessageProps {
 
 const ErrorMessage = (error: ErrorMessageProps) => {
   return (
-    <Typography variant='subtitle2' color='gray' paddingTop={1} sx={{ textAlign: 'center', fontStyle: 'italic' }}>{error.error}</Typography>
+    <Typography variant='subtitle2' color='gray' paddingBottom={1} sx={{ textAlign: 'center', fontStyle: 'italic' }}>{error.error}</Typography>
   )
 }
 

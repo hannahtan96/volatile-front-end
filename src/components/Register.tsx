@@ -57,6 +57,7 @@ const Register = () => {
 
     registerNewUser(firstName, lastName, username, email, password)
       .then((response) => {
+
         setMessage(response.data.message)
         reset()
         navigate('/login')
@@ -66,7 +67,7 @@ const Register = () => {
           (error.response &&
             error.response.data &&
             error.response.data.message) ||
-          error.message ||
+          error.message?.slice() ||
           error.toString();
 
         setMessage(resMessage);
@@ -93,7 +94,7 @@ const Register = () => {
                   value={value}
                   onChange={onChange}
                   error={!!error}
-                  helperText={error ? error.message : null}
+                  helperText={error ? 'First name' + error.message?.slice(9,) : null}
                 />
               )}
               rules={{ required: 'First name required' }}
@@ -110,7 +111,7 @@ const Register = () => {
                   value={value}
                   onChange={onChange}
                   error={!!error}
-                  helperText={error ? error.message : null}
+                  helperText={error ? 'Last name' + error.message?.slice(8,) : null}
                 />
               )}
               rules={{ required: 'Last name required' }}
@@ -127,7 +128,7 @@ const Register = () => {
                   value={value}
                   onChange={onChange}
                   error={!!error}
-                  helperText={error ? error.message : null}
+                  helperText={error ? 'Username' + error.message?.slice(8,) : null}
                 />
               )}
               rules={{ required: 'Username required' }}
@@ -144,7 +145,7 @@ const Register = () => {
                   value={value}
                   onChange={onChange}
                   error={!!error}
-                  helperText={error ? error.message : null}
+                  helperText={error ? 'Email' + error.message?.slice(5,) : null}
                 />
               )}
               rules={{ required: 'Email required' }}
@@ -162,7 +163,7 @@ const Register = () => {
                   value={value}
                   onChange={onChange}
                   error={!!error}
-                  helperText={error ? error.message : null}
+                  helperText={error ? 'Password' + error.message?.slice(8,) : null}
                 />
               )}
               rules={{ required: 'Password required' }}
